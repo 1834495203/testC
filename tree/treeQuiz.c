@@ -7,4 +7,9 @@ int build(Tree head){
     if(head == null) return 0;
     Tree node1 = malloc(sizeof(TreeNode));
     node1->data = 10;
+    return 1;
+}
+
+void test4Tree(){
+    printf("tree");
 }
