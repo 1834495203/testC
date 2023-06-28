@@ -5,14 +5,13 @@
 #ifndef TESTC_TREEQUIZ_H
 #define TESTC_TREEQUIZ_H
 
-#include "stdlib.h"
-#include "stdio.h"
-#define null ((void *)0)
+#include "../base/base.h"
+#include "../queue/queueQuiz.h"
 
 typedef int Node;
 
 //二叉树
-typedef struct TreeStruct{
+typedef struct TreeStruct {
     Node data;
     struct TreeStruct *leftNode;
     struct TreeStruct *rightNode;
@@ -20,5 +19,7 @@ typedef struct TreeStruct{
 
 //构造
 int build(Tree head);
+
+void test4Tree();
 
 #endif //TESTC_TREEQUIZ_H
