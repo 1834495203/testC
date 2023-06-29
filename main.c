@@ -2,14 +2,17 @@
 #include "queue/queueQuiz.h"
 
 int main() {
-    LinkedQueue queue = initLinkedQueue();
-    build4LinkedQueueInHead(&queue);
+    LinkedQueue *queue = initLinkedQueue();
+    build4LinkedQueueInHead(queue);
+    print4LinkedQueue(queue);
 
-    LinkedQueueP temp = queue.head;
+    pop4LinkedQueue(queue);
+    push4LinkedQueue(queue, 'x');
+    pop4LinkedQueue(queue);
+    push4LinkedQueue(queue, 'y');
+    pop4LinkedQueue(queue);
+    pop4LinkedQueue(queue);
 
-    while (temp != null) {
-        printf("%c", temp->data);
-        temp = temp->next;
-    }
+    print4LinkedQueue(queue);
     return 0;
 }

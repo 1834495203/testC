@@ -37,13 +37,73 @@ void build4LinkedQueueInHead(LinkedQueue *queue) {
             temp->next = queue->head;
             queue->head = temp;
         }
-        printf("请输入节点值: ");
         scanf("%c", queueNode);
     }
 }
 
-LinkedQueue initLinkedQueue() {
+LinkedQueue* initLinkedQueue() {
+    printf("初始化队列\n");
     LinkedQueue *queue = malloc(sizeof(LinkedQueue));
     queue->head = null, queue->tail = null;
-    return *queue;
+    return queue;
 }
+
+LinkedQueueP pop4LinkedQueue(LinkedQueue *queue) {
+    printf("出一个节点: ");
+    LinkedQueueP res = null;
+    if (isLinkedQueueInit(queue) || isLinkedQueueEmpty(queue)) return res;
+    if (queue->head == queue->tail) {
+        //节点只有一个的情况
+        res = queue->head;
+        queue->head = null, queue->tail = null;
+    } else {
+        //多个节点
+        res = queue->head;
+        queue->head = queue->head->next;
+    }
+    if (res != null) printf("%c\n", res->data);
+    return res;
+}
+
+void print4LinkedQueue(LinkedQueue *queue) {
+    printf("遍历链式队列: ");
+    //如果队列不为空
+    if (!isLinkedQueueInit(queue) && !isLinkedQueueEmpty(queue)) {
+        LinkedQueueNode *temp = queue->head;
+        while (temp != null){
+            printf("%c ", temp->data);
+            temp = temp->next;
+        }
+        printf("\n");
+    }
+}
+
+boolean push4LinkedQueue(LinkedQueue *queue, QueueNode node) {
+    printf("入一个节点: ");
+    if (isLinkedQueueInit(queue)) return false;
+    printf("%c\n", node);
+    LinkedQueueP temp = malloc(sizeof(LinkedQueue));
+    temp->data = node, temp->next = null;
+
+    if (queue->tail == null) {
+        queue->head = temp;
+        queue->tail = queue->head;
+    } else {
+        queue->tail->next = temp;
+        queue->tail = temp;
+    }
+    return true;
+}
+
+boolean isLinkedQueueEmpty(LinkedQueue *queue) {
+    boolean isEmpty = queue->tail == null && queue->head == null;
+    if (isEmpty) printf("队列为空！\n");
+    return isEmpty;
+}
+
+boolean isLinkedQueueInit(LinkedQueue *queue) {
+    boolean isInit = queue == null;
+    if (isInit) printf("队列未初始化！\n");
+    return isInit;
+}
+
