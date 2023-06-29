@@ -7,19 +7,32 @@
 
 #include "../base/base.h"
 
-typedef int Node;
+typedef char QueueNode;
 
-//链式队列节点
+//链式队列的节点
 typedef struct LinkedQueueNodeStruct {
-    Node data;
+    QueueNode data;
     struct LinkedQueueNodeStruct *next;
-}LinkedQueueNode, *LinkedQueue;
+}LinkedQueueNode, *LinkedQueueP;
 
+//链式队列
 typedef struct LinkedQueueStruct {
-    LinkedQueue head;
-    LinkedQueue tail;
-}Queue;
+    LinkedQueueP head;
+    LinkedQueueP tail;
+}LinkedQueue;
 
 void test4Queue();
+
+/**
+ * 初始化链式队列
+ * @return 链式队列
+ */
+LinkedQueue initLinkedQueue();
+
+/**
+ * 链式队列头插法
+ * @param queue 链式队列指针 指向头节点
+ */
+void build4LinkedQueueInHead(LinkedQueue *queue);
 
 #endif //TESTC_QUEUEQUIZ_H
