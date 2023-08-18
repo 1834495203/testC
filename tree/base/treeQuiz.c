@@ -9,7 +9,3 @@ int build(Tree head){
     node1->data = 10;
     return 1;
 }
-
-void test4Tree(){
-    printf("tree");
-}

@@ -5,7 +5,7 @@
 #ifndef TESTC_QUEUEQUIZ_H
 #define TESTC_QUEUEQUIZ_H
 
-#include "../base/base.h"
+#include "../../base/base.h"
 #include "queueData.h"
 
 void test4Queue();

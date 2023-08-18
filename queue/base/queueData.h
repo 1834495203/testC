@@ -9,7 +9,7 @@
 typedef char QueueNode;
 
 //顺序表队列的长度
-#define MAX 1 << 5
+#define MAX 1 << 3
 
 //链式队列的节点
 typedef struct LinkedQueueNodeStruct {
