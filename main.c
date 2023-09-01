@@ -5,6 +5,8 @@
 #include "string.h"
 #include "pthread.h"
 #include "train/TrainStart.h"
+#include "list/base/listData.h"
+#include "conio.h"
 
 typedef struct student{
     string name;
@@ -77,7 +79,7 @@ int test(){
 }
 
 //1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
-void sort(){
+void sort() {
     int size;
     scanf("%d", &size);
     //动态分配二维数组
@@ -208,13 +210,90 @@ const static int *outlet() {
     return &a;
 }
 
-typedef struct tet{
-    int a;
-    char b;
-}Te;
+void n(LinkedListNode *listNode){
+    *listNode = *(listNode->next);
+}
+
+union testUnion{
+    struct {
+        int x, y, z;
+    } u;
+    int k;
+    int j[4];
+}is;
+
+union delInt {
+    int x;
+    struct {
+        char a[4];
+    }byte;
+}in;
+
+typedef enum testEnum {
+    aa, bb, cc, dd = 1, ee
+}out;
+
+#define iff(a, b, c) c=a>b?a:b
+
+void testString(char *s) {
+    char *p = malloc(sizeof(char));
+    strcpy(p, s);
+    *(p+1) = 'c';
+    printf("%s", p);
+}
+
+void tsst(char *a, char *b, char *c) {
+    while (*a && *b) {
+        *c = *a;
+        c++;
+        a++;
+        *c = *b;
+        c++;
+        b++;
+    }
+    printf("%s", a);
+}
+
+void sss(char x){
+    if (x > 'a' && x < 'z' || x > 'A' && x < 'Z')
+        printf("该字符为字母字符");
+}
+
+typedef struct stt {
+    int arr[10];
+    char *name;
+} ST;
+
+void testP1(int a){
+    printf("%d", a);
+}
+
+void testP2(void (*p)(int), int b){
+    (*p)(b);
+    p(b);
+}
+
+void ascend(a, b)
+int a;
+int b;
+{
+    printf("%d, %d", a, b);
+}
 
 int main() {
-    Te t = {.a = 10, .b = 'c'};
-    printf("%d", t.a);
+    int x[10] = {9, 10, 2, 3, 1, 5, 6, 7, 8, 0};
+//    bubbleSort(x, 10);
+    for (int j = 2; j <= 8; ++j) {
+        for (int k = 0; k <= 9 - j; ++k) {
+            if (x[k] > x[k+1]) {
+                int temp = x[k];
+                x[k] = x[k+1];
+                x[k+1] = temp;
+            }
+        }
+    }
+    for (int j = 0; j < 10; ++j) {
+        printf("%d ", x[j]);
+    }
     return 0;
 }

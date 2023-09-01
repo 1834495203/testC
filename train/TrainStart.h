@@ -6,6 +6,7 @@
 #define TESTC_TRAINSTART_H
 
 #include "../base/base.h"
+#include "../list/base/listData.h"
 
 /**
  * 打印数组
@@ -107,5 +108,107 @@ char *cat(char *var1, char *var2);
  * @param n n位数
  */
 void narcissistic(int n);
+
+/**
+ * 输入字符组成链表，然后反向输出
+ */
+void inputAndOutput();
+
+/**
+ * 删除链表中所有x的数据
+ * @param list 链表
+ * @param x 数据
+ */
+void deleteInX(LinkedList list, ListNode x);
+
+/**
+ * 创建链表
+ * @param arr 数组
+ * @return 链表头节点
+ */
+LinkedList createList(const ListNode *arr, int len);
+
+/**
+ * 打印链表
+ * @param list 链表
+ */
+void printLinkedList(LinkedList list);
+
+/**
+ * *********************************************************
+ */
+
+/**
+ * 莱布尼茨级数
+ * s = 1 - 1/3 + 1/5 - 1/7 + ... + 1/101
+ */
+void sum_s();
+
+/**
+ * 求出555555中约数最大的三位数
+ */
+void doWhile_555555();
+
+/**
+ * 反转输入的数字
+ */
+void reverse_();
+
+typedef struct stu_ {
+    int sid, score;
+}S_;
+
+/**
+ * 将高于平均分的学生的数据放入数组rs, 人数放入n, 返回平均分
+ * @param s 学生数组
+ * @param rs 高于平均分的学生
+ * @param n 人数
+ * @return 平均分
+ */
+double recordStudent(S_ *s, S_ *rs, int *n);
+
+/**
+ * 计算 s = (1 - 1/2) + (1/3 - 1/4) + ... + (1/(2n-1) - 1/2n)
+ * @param n 长度
+ * @return 值
+ */
+double sum_a(int n);
+
+/**
+ * 检查开头的 * 是否符合预期，删除多余的 *
+ * @param str 字符串
+ * @param n *数量
+ */
+void checkStrStar(char **str, int n);
+
+/**
+ * 逆置字符串
+ * @param str 字符串
+ * @param len 长度
+ */
+void reverse_s(char *str, int len);
+
+/**
+ * 99乘法表
+ */
+void print99();
+
+/**
+ * 二进制求和
+ * @param a 二进制字符串1
+ * @param b 二进制字符串2
+ * @return 和
+ */
+char *addBinary(char * a, char * b);
+
+/**
+ * 从键盘上输入任意整数，求它的逆序数
+ */
+void getReverse();
+
+/**
+ * 统计大写字母，小写字母，数字字符，空格等
+ */
+void classify();
 
 #endif //TESTC_TRAINSTART_H

@@ -4,6 +4,7 @@
 
 #include "TrainStart.h"
 #include "math.h"
+#include "string.h"
 
 double calculateE() {
     int n;
@@ -20,7 +21,7 @@ double calculateE() {
     return e;
 }
 
-int pascalTriangle(int row, int col){
+int pascalTriangle(int row, int col) {
     if (col == 0 || row == col) return 1;
     else
         return pascalTriangle(row - 1, col - 1) + pascalTriangle(row - 1, col);
@@ -163,4 +164,203 @@ void narcissistic(int n) {
         }
         if (res == i) printf("%d ", res);
     }
+}
+
+void printAndFree(LinkedList head, LinkedList tail) {
+    LinkedList temp = head;
+    if (head != tail)
+        printAndFree(temp->next, tail);
+    printf("%c ", temp->data);
+    free(temp);
+}
+
+void inputAndOutput() {
+    char input;
+    LinkedList list = malloc(sizeof(LinkedListNode));
+    list->next = null;
+    LinkedList p = list->next;
+
+    printf("请输入一串字符:\n");
+    while ((input = (char) getchar()) != '\n') {
+        LinkedList temp = malloc(sizeof(LinkedListNode));
+        temp->data = input; temp->next = null;
+        if (p == null) list->next = temp;
+        else p->next = temp;
+        p = temp;
+    }
+
+    printAndFree(list->next, p);
+}
+
+void deleteInX(LinkedList list, ListNode x) {
+    if (list == null) return;
+    LinkedList front = list;
+    LinkedList rear = list->next;
+    while (rear != null) {
+        if (rear->data == x) {
+            LinkedList temp = rear->next;
+            free(rear);
+            front->next = temp;
+            rear = temp;
+        } else {
+            rear = rear->next;
+            front = front->next;
+        }
+    }
+}
+
+LinkedList createList(const ListNode *arr, int len) {
+    if (len == 0) return null;
+    LinkedList rs = malloc(sizeof(LinkedListNode));
+    rs->next = null;
+    for (int i = 0; i < len; ++i) {
+        LinkedList temp = malloc(sizeof(LinkedListNode));
+        temp->data = arr[i];
+        temp->next = rs->next;
+        rs->next = temp;
+    }
+    return rs;
+}
+
+void printLinkedList(LinkedList list) {
+    if (list == null) return;
+    LinkedList temp = list->next;
+    while (temp != null) {
+        printf("%c ", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+void sum_s() {
+    double rs = 0;
+    int isNeg = 1;
+    for (int i = 1; i <= 101; i+=2) {
+        if (isNeg) rs += (double) 1/i;
+        else rs -= (double) 1/i;
+        isNeg = !isNeg;
+    }
+    printf("%f", rs);
+}
+
+void doWhile_555555() {
+    int i = 555555, range = 100, rs = 0;
+    do {
+        if (!(i % range) && range > rs) rs = range;
+    } while (++range <= 999);
+    printf("%d", rs);
+}
+
+void reverse_() {
+    int input;
+    scanf("%d", &input);
+    while (input) {
+        printf("%d ", input%10);
+        input /= 10;
+    }
+}
+
+double recordStudent(S_ *s, S_ *rs, int *n) {
+    S_ *res = malloc(sizeof(struct stu_)*(*n));
+    S_ *p = res;
+    int sum = 0;
+    double avg = 0;
+    for (int i = 0; i < *n; ++i) avg += s[i].score;
+    avg = avg/(double) *n;
+    for (int i = 0; i < *n; ++i) {
+        if (s[i].score >= avg) {
+            *p++ = s[i];
+            sum++;
+        }
+    }
+    *rs = *res;
+    *n = sum;
+    return avg;
+}
+
+double toSum_a(double a) {
+    return 1.0/(2*a - 1) - 1.0/(2*a);
+}
+
+double sum_a(int n) {
+    double rs = 0;
+    for (int i = 1; i <= n; ++i) {
+        rs += toSum_a(i);
+    }
+    return rs;
+}
+
+void checkStrStar(char **str, int n) {
+    char *p = *str;
+    int step = 0;
+    while (*p != '\0') {
+        if (*p == '*' && n > 0) {
+            n--;
+            step++;
+        }
+        else if (*p != '*' && n == 0) {
+            *str = (p-step);
+            break;
+        }
+        p++;
+    }
+    printf("%s\n", *str);
+}
+
+void reverse_s(char *str, int len) {
+    for (int i = 0; i < len / 2; ++i) {
+        char temp = str[i];
+        str[i] = str[len-i-1];
+        str[len-i-1] = temp;
+    }
+    printf("%s", str);
+}
+
+void print99() {
+    int i, j;
+    for (i = 1; i <= 9; ++i) {
+        for (j = 1; j <= i; ++j) {
+            printf("% d * %d = %d ", j, i, i*j);
+        }
+        printf("\n");
+    }
+}
+
+char *addBinary(char *a, char *b) {
+    int a_len = (int) strlen(a), b_len = (int) strlen(b), x = 0;
+    
+    return NULL;
+}
+
+void getReverse() {
+    int x;
+    scanf_s("%d", &x);
+
+    while (x != 0) {
+        printf("%d", x%10);
+        x /= 10;
+    }
+}
+
+#define isUpper(c) c >= 'A' && c <= 'Z'
+#define isLower(c) c >= 'a' && c <= 'z'
+#define isNumber(c) c >= '0' && c <= '9'
+#define isSpace(c) c == ' '
+
+void classify() {
+    char *s = malloc(sizeof(char));
+    gets(s);
+    char *temp = s;
+    int u = 0, l = 0, n = 0, sp = 0, o = 0;
+
+    while (*temp != '\0') {
+        if (isNumber(*temp)) n++;
+        else if (isLower(*temp)) l++;
+        else if (isUpper(*temp)) u++;
+        else if (isSpace(*temp)) sp++;
+        else o++;
+        temp++;
+    }
+
+    printf("大写字符数为：%d，小写字符数为：%d，数字字符数为：%d，空格字符数为：%d，其他字符数为：%d", u, l, n, sp, o);
 }
