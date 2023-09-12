@@ -2,9 +2,12 @@
 // Created by asus on 2023/8/10.
 //
 
+#include "stdlib.h"
 #include "TrainStart.h"
 #include "math.h"
 #include "string.h"
+#include "../queue/base/queueData.h"
+#include "../queue/base/queueQuiz.h"
 
 double calculateE() {
     int n;
@@ -226,7 +229,7 @@ void printLinkedList(LinkedList list) {
     if (list == null) return;
     LinkedList temp = list->next;
     while (temp != null) {
-        printf("%c ", temp->data);
+        printf("%d ", temp->data);
         temp = temp->next;
     }
     printf("\n");
@@ -245,9 +248,8 @@ void sum_s() {
 
 void doWhile_555555() {
     int i = 555555, range = 100, rs = 0;
-    do {
-        if (!(i % range) && range > rs) rs = range;
-    } while (++range <= 999);
+    do if (!(i % range) && range > rs) rs = range;
+    while (++range <= 999);
     printf("%d", rs);
 }
 
@@ -363,4 +365,273 @@ void classify() {
     }
 
     printf("大写字符数为：%d，小写字符数为：%d，数字字符数为：%d，空格字符数为：%d，其他字符数为：%d", u, l, n, sp, o);
+}
+
+// 找出数组中不重复的数字，异或的应用 异或还可用于交换两个元素值
+int singleNumber(const int *nums, int numsSize) {
+    int result = 0;
+    for (int i = 0; i < numsSize; i++) {
+        result ^= nums[i];
+    }
+    return result;
+}
+
+TreeNode *createTreeNode(Node data) {
+    TreeNode *node = malloc(sizeof(TreeNode));
+    node->data = data;
+    node->lchild = null;
+    node->rchild = null;
+    return node;
+}
+
+TreeNode *insertTreeNode(TreeNode *node, Node data) {
+    if (node == null)
+        return createTreeNode(data);
+    if (data < node->data) {
+        node->lchild = insertTreeNode(node->lchild, data);
+    } else if (data > node->data) {
+        node->rchild = insertTreeNode(node->rchild, data);
+    }
+    return node;
+}
+
+void inorderTraversal(TreeNode *node) {
+    if (node != null) {
+        inorderTraversal(node->lchild);
+        printf("%d ", node->data);
+        inorderTraversal(node->rchild);
+    }
+}
+
+int findLatent(int total, int height) {
+    int rs = 1;
+    for (int i = 0; i < height; ++i) rs <<= 1;
+    printf("%d\n", rs);
+    return total / (rs-1);
+}
+
+void listInsert(LinkedList list, ListNode data) {
+    if (list == null) return;
+    LinkedListNode *create = malloc(sizeof(LinkedListNode));
+    create->data = data;
+    create->next = null;
+    LinkedListNode *temp = list->next;
+    LinkedListNode *node = temp->next;
+    if (null == node) temp->next = create;
+    else {
+        int order = (temp->data - node->data) > 0 ? true : false;
+        LinkedListNode *front = list;
+        while (front != null) {
+            //当数组为递减数组时
+            if (order && temp->data > data) {
+                front = temp;
+                temp = temp->next;
+            } else if (order && temp->data <= data) {
+                front->next = create;
+                create->next = temp;
+                break;
+            }
+            //当数组为递增数组时
+            if (!order && temp->data < data) {
+                front = temp;
+                temp = temp->next;
+            } else if (!order && temp->data >= data) {
+                front->next = create;
+                create->next = temp;
+                break;
+            }
+        }
+    }
+}
+
+void findSaddlePoint(int **matrix, int m, int n) {
+    int j;
+    for (int i = 0; i < m; ++i) {
+        int min = matrix[i][0];
+        //找出行最小
+        for (j = 0; j < n; ++j)
+            if (min > matrix[i][j]) {
+                min = matrix[i][j];
+                break;
+            }
+        j = j == n ? 0 : j;
+        //是否为列最大
+        int is = true;
+        for (int k = 0; k < m && is; ++k)
+            if (min < matrix[k][j]) is = false;
+        if (is) printf("%d ", min);
+    }
+}
+
+void adjustMaxHeap(int *arr, int len, int k) {
+    int temp = arr[k];
+    //这里i初始化是k节点的左节点，同时循环时i会指向较大的那个节点
+    for (int i = k*2+1; i <= len; i=i*2+1) {
+        //左节点与右节点比较
+        if (i < len && arr[i] < arr[i+1]) i++;
+        //调整完成
+        if (temp >= arr[i]) break;
+        else {
+            //将根节点与较大的子节点交换，并继续从交换处向下调整
+            arr[k] = arr[i];
+            k = i;
+        }
+    }
+    //最终根节点的位置
+    arr[k] = temp;
+}
+
+void initSharedStack(SharedStack *stack, SeparatedStack *var1, SeparatedStack *var2) {
+    stack->total_size = 0;
+    var1->type = 0;
+    var1->size = 0;
+    var1->index = 0;
+    var2->type = 1;
+    var2->size = 0;
+    var2->index = SHARED_STACK_MAX - 1;
+    stack->stack_one_index = var1->index;
+    stack->stack_two_index = var2->index;
+}
+
+int insert4SharedStack(SharedStack *stack, SeparatedStack *var, int data) {
+    if (stack == null || var == null) return -1;
+    if (stack->total_size+1 == SHARED_STACK_MAX) return -1;
+    if (var->type == 0) {
+        stack->datum[stack->stack_one_index++] = data;
+        var->index = stack->stack_one_index;
+    } else {
+        stack->datum[stack->stack_two_index--] = data;
+        var->index = stack->stack_two_index;
+    }
+    stack->total_size++;
+    var->size++;
+    return 1;
+}
+
+int isBinaryTreeSame(TreeNode *var1, TreeNode *var2) {
+    if (var1 != null && var2 != null) {
+        int l = isBinaryTreeSame(var1->lchild, var2->lchild);
+        int r = isBinaryTreeSame(var1->rchild, var2->rchild);
+        if (l == 0 || r == 0) return 0;
+        return var1->data == var2->data;
+    }
+    return var1 == null && var2 == null;
+}
+
+#define FILE_STRING_MAX (1 << 3) // aka 8
+
+int isStringSymmetry() {
+    FILE *p = fopen("D:\\github\\files\\string.txt", "r");
+    char *var = malloc(sizeof(char) * FILE_STRING_MAX);
+    char c;
+    int start = 0, len = 0;
+    int capacity = FILE_STRING_MAX;
+    while ((c = (char) fgetc(p)) != EOF) {
+        *(var + len) = c;
+        len++;
+        //扩容
+        if (len >= capacity) {
+            char *temp = realloc(var, (capacity <<= 1) * sizeof(char));
+            if (null == temp) {
+                printf("扩容发生错误!");
+                free(var);
+                exit(1);
+            } else var = temp;
+        }
+    }
+    fclose(p);
+    *(var + len) = '\0';
+    len -= 1;
+    while (start <= len && var[start++] == var[len--]);
+    return var[start] == var[len];
+}
+
+OrderedList *initOrderedList(const int *data, int len) {
+    OrderedList *temp = malloc(sizeof(OrderedList));
+    for (int i = 0; i < len; ++i) temp->data[i] = data[i];
+    temp->size = len > ORDER_LIST_MAX_LENGTH ? ORDER_LIST_MAX_LENGTH : len;
+    return temp;
+}
+
+void removeItems4OrderList(OrderedList *list, int item) {
+    int step = 0;
+    for (int i = 0; i < list->size; ++i) {
+        if (list->data[i] != item) list->data[i-step] = list->data[i];
+        else step++;
+    }
+    list->size -= step;
+}
+
+// 在中序遍历序列中查找根节点的索引
+int findRootIndex(const int *inorder, int inStart, int inEnd, int rootValue) {
+    for (int i = inStart; i <= inEnd; i++) {
+        if (inorder[i] == rootValue) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+TreeNode *createTree(int *inorder, int inStart, int inEnd, int *postorder, int *postIndex) {
+    if (inStart > inEnd) return null;
+
+    // 后序遍历序列的最后一个元素是根节点
+    int rootValue = postorder[(*postIndex)--];
+
+    // 创建根节点
+    TreeNode *root = malloc(sizeof(TreeNode));
+    root->data = rootValue;
+    root->lchild = root->rchild = null;
+
+    // 在中序遍历序列中找到根节点的位置
+    int rootIndex = findRootIndex(inorder, inStart, inEnd, rootValue);
+
+    // 递归构建右子树（注意：先构建右子树）
+    root->rchild = createTree(inorder, rootIndex + 1, inEnd, postorder, postIndex);
+    // 递归构建左子树
+    root->lchild = createTree(inorder, inStart, rootIndex - 1, postorder, postIndex);
+
+    return root;
+}
+
+int binaryTreeNodeHeight(TreeNode *var, Node data, int current) {
+    if (var == null) return 0;
+    if (var->data == data) return current;
+
+    int left = binaryTreeNodeHeight(var->lchild, data, current+1);
+    int right = binaryTreeNodeHeight(var->rchild, data, current+1);
+
+    return left ? left : right;
+}
+
+int matchBracket(char *bracket) {
+    if (null == bracket) return 0;
+    LinkedQueue *queue = initLinkedQueue();
+    char *p = bracket;
+    push4LinkedQueue(queue, *p++);
+    while (*p != '\0') {
+        switch (*p) {
+            case '}': {
+                if (!isLinkedQueueEmpty(queue) && queue->head->data == '{') pop4LinkedQueue(queue);
+                else push4LinkedQueue(queue, *p);
+                p++;
+                break;
+            }
+            case ')':{
+                if (!isLinkedQueueEmpty(queue) && queue->head->data == '(') pop4LinkedQueue(queue);
+                else push4LinkedQueue(queue, *p);
+                p++;
+                break;
+            }
+            case ']':{
+                if (!isLinkedQueueEmpty(queue) && queue->head->data == '[') pop4LinkedQueue(queue);
+                else push4LinkedQueue(queue, *p);
+                p++;
+                break;
+            }
+            default:
+                push4LinkedQueue(queue, *p++);
+        }
+    }
+    return isLinkedQueueEmpty(queue);
 }

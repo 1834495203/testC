@@ -24,7 +24,7 @@ void build4LinkedQueueInHead(LinkedQueue *queue) {
     printf("头插法进行链式队列的创建\n");
     QueueNode *queueNode = malloc(sizeof(QueueNode));
     printf("请输入节点值: ");
-    scanf("%c", queueNode);
+    scanf_s("%d", queueNode);
 
     while (*queueNode != 'q') {
         LinkedQueueP temp = malloc(sizeof(LinkedQueueNode));
@@ -37,7 +37,7 @@ void build4LinkedQueueInHead(LinkedQueue *queue) {
             temp->next = queue->head;
             queue->head = temp;
         }
-        scanf("%c", queueNode);
+        scanf_s("%d", queueNode);
     }
 }
 
@@ -107,3 +107,37 @@ boolean isLinkedQueueInit(LinkedQueue *queue) {
     return isInit;
 }
 
+//这里初始化时队列的尾部指向的是最近加入队列的元素
+OrderedQueue *orderedQueueInit(const QueueNode *arr, int len) {
+    if (len == 0 || len > MAX) return null;
+    OrderedQueue *queue = malloc(sizeof(OrderedQueue));
+    queue->head = -1;
+    queue->tail = -1;
+    queue->size = 0;
+    for (int i = 0; i < len; ++i) {
+        queue->data[++queue->tail] = arr[i];
+        if (queue->head == -1) queue->head = 0;
+        queue->size++;
+    }
+    return queue;
+}
+
+int push4OrderQueue(OrderedQueue *queue, QueueNode data) {
+    if (queue == null) return -1;
+    int index = (queue->tail + 1) % MAX;
+    if (index == queue->head) return -1;
+    else queue->tail = index;
+    queue->data[queue->tail] = data;
+    queue->size++;
+    return 1;
+}
+
+int pop4OrderQueue(OrderedQueue *queue, QueueNode *data) {
+    if (null == queue || -1 == queue->head) return 0;
+    int index = (queue->head + 1) % MAX;
+    *data = queue->data[queue->head];
+    if (index == queue->tail) return -1;
+    else queue->head = index;
+    queue->size--;
+    return 1;
+}

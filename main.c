@@ -7,6 +7,7 @@
 #include "train/TrainStart.h"
 #include "list/base/listData.h"
 #include "conio.h"
+#include "queue/base/queueQuiz.h"
 
 typedef struct student{
     string name;
@@ -280,20 +281,154 @@ int b;
     printf("%d, %d", a, b);
 }
 
+int pow3(int n, int x) {
+    int last = 1;
+    for (int i = 1; i <= x; ++i) {
+        last = last * n % 1000;
+    }
+    return last;
+}
+
+void revStr(char *s){
+    char *p = s, c;
+    while (*p) p++;
+    p--;
+    if (s < p) {
+        c = *s;
+        *s = *p;
+        *p = c;
+        revStr(s+1);
+        *p = '\0';
+    }
+}
+
+void fun(int *p){
+    p = p+1;
+}
+
+void cul() {
+    int x, y, z;
+    do {
+        scanf_s("%d %d", &x, &y);
+        printf("ШЁгр: %d\n", x%y);
+    } while ((z = getchar()) != 'q');
+}
+
+union testUnion1{
+    long long x;
+    char z;
+}ctc;
+
+void fuc(int *a, int *b){
+    int *c;
+    c = a; a = b; b = c;
+}
+
+void testMat(int **x) {
+    printf("%d", **x);
+}
+
 int main() {
-    int x[10] = {9, 10, 2, 3, 1, 5, 6, 7, 8, 0};
-//    bubbleSort(x, 10);
-    for (int j = 2; j <= 8; ++j) {
-        for (int k = 0; k <= 9 - j; ++k) {
-            if (x[k] > x[k+1]) {
-                int temp = x[k];
-                x[k] = x[k+1];
-                x[k+1] = temp;
-            }
-        }
-    }
-    for (int j = 0; j < 10; ++j) {
-        printf("%d ", x[j]);
-    }
+
+    char *b = "{}[]()";
+
+    int i = matchBracket(b);
+
+    printf("%d", i);
+
+//    int inOrder[] = {4, 2, 5, 1, 6, 3, 7};
+//    int postOrder[] = {4, 5, 2, 6, 7, 3, 1};
+//    int size = sizeof(inOrder) / sizeof(inOrder[0]);
+//    int postIndex = size - 1;
+//
+//    TreeNode *tree = createTree(inOrder, 0, size-1, postOrder, &postIndex);
+//
+//    inorderTraversal(tree);
+//
+//    int data = 0;
+//    int res = binaryTreeNodeHeight(tree, 5, data);
+//    printf("%d", res);
+
+//    int arr[] = {5, 5, 5, 5, 1, 5, 5, 5, 5};
+//    OrderedList *list = initOrderedList(arr, 9);
+//    removeItems4OrderList(list, 5);
+//    printArray(list->data, list->size);
+
+//    int i = isStringSymmetry();
+//    printf("%d", i);
+
+//    TreeNode *head1 = createTreeNode(11);
+//    TreeNode *head2 = createTreeNode(11);
+//    TreeNode *node2 = createTreeNode(22);
+//    TreeNode *node3 = createTreeNode(33);
+//
+//    head1->lchild = node2;
+//    head1->rchild = node3;
+//
+//    head2->lchild = node2;
+//    head2->rchild = node3;
+//
+//    int i = isBinaryTreeSame(head1, head2);
+//
+//    printf("%d", i);
+
+//    SharedStack *stack = malloc(sizeof(SharedStack));
+//    SeparatedStack *var1 = malloc(sizeof(SeparatedStack));
+//    SeparatedStack *var2 = malloc(sizeof(SeparatedStack));
+//
+//    initSharedStack(stack, var1, var2);
+//
+//    insert4SharedStack(stack, var1, 11);
+//    insert4SharedStack(stack, var2, 22);
+
+//    int arr[] = {4, 6, 7, 1, 2, 9, 8};
+//    for (int i = 2; i >= 0; --i) {
+//        adjustMaxHeap(arr, 7, i);
+//    }
+//    printf("%d", arr[0]);
+
+//    int arr[] = {1};
+//    QueueNode *data = malloc(sizeof(int));
+//    OrderedQueue *queue = orderedQueueInit(arr, 1);
+//    push4OrderQueue(queue, 2);
+//    push4OrderQueue(queue, 3);
+//    push4OrderQueue(queue, 4);
+//    push4OrderQueue(queue, 5);
+//    push4OrderQueue(queue, 6);
+//
+//    pop4OrderQueue(queue, data);
+//    pop4OrderQueue(queue, data);
+//    pop4OrderQueue(queue, data);
+//    pop4OrderQueue(queue, data);
+//
+//    push4OrderQueue(queue, 22);
+//    push4OrderQueue(queue, 33);
+//    push4OrderQueue(queue, 44);
+//    push4OrderQueue(queue, 55);
+//    push4OrderQueue(queue, 66);
+//    push4OrderQueue(queue, 77);
+//    push4OrderQueue(queue, 88);
+//    printf("%d", *data);
+
+//    int n = 3, m = 3;
+//    int **x = malloc(sizeof(int *)*n);
+//    for (int i = 0; i < m; ++i) *x = malloc(sizeof(int)*m);
+//    int a[] = {1, 2, 3};
+//    int b[] = {4, 5, 6};
+//    int c[] = {7, 8, 9};
+//    x[0] = a;
+//    x[1] = b;
+//    x[2] = c;
+//    findSaddlePoint(x, m, n);
+
+//    ctc.z = 'c';
+//    ctc.x = 0x123456;
+//    printf("%lld %x", sizeof(ctc) ,ctc.z);
+
+//    ListNode x[] = {9, 7, 5};
+//    LinkedList list = createList(x, 3);
+//    printLinkedList(list);
+//    listInsert(list, 8);
+//    printLinkedList(list);
     return 0;
 }

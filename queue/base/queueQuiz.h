@@ -57,4 +57,28 @@ boolean isLinkedQueueEmpty(LinkedQueue *queue);
  */
 boolean isLinkedQueueInit(LinkedQueue *queue);
 
+/**
+ * 创建循序队列
+ * @param arr 数组元素
+ * @param len 长度
+ * @return 循环队列
+ */
+OrderedQueue *orderedQueueInit(const QueueNode *arr, int len);
+
+/**
+ * 向循环队列插入元素
+ * @param queue 队列
+ * @param data 数据
+ * @return 是否插入成功
+ */
+int push4OrderQueue(OrderedQueue *queue, QueueNode data);
+
+/**
+ * 从队列中取出一个元素
+ * @param queue 队列
+ * @param data 取出的数据
+ * @return 是否成功取出
+ */
+int pop4OrderQueue(OrderedQueue *queue, QueueNode *data);
+
 #endif //TESTC_QUEUEQUIZ_H
