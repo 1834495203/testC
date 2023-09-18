@@ -133,7 +133,7 @@ int push4OrderQueue(OrderedQueue *queue, QueueNode data) {
 }
 
 int pop4OrderQueue(OrderedQueue *queue, QueueNode *data) {
-    if (null == queue || -1 == queue->head) return 0;
+    if (null == queue || -1 == queue->head) return -1;
     int index = (queue->head + 1) % MAX;
     *data = queue->data[queue->head];
     if (index == queue->tail) return -1;

@@ -8,6 +8,7 @@
 #include "string.h"
 #include "../queue/base/queueData.h"
 #include "../queue/base/queueQuiz.h"
+#include "../base/base.h"
 
 double calculateE() {
     int n;
@@ -370,9 +371,8 @@ void classify() {
 // 找出数组中不重复的数字，异或的应用 异或还可用于交换两个元素值
 int singleNumber(const int *nums, int numsSize) {
     int result = 0;
-    for (int i = 0; i < numsSize; i++) {
+    for (int i = 0; i < numsSize; i++)
         result ^= nums[i];
-    }
     return result;
 }
 
@@ -635,3 +635,52 @@ int matchBracket(char *bracket) {
     }
     return isLinkedQueueEmpty(queue);
 }
+
+TreeNode *searchBST(TreeNode *head, Node data) {
+    if (null != head) {
+        TreeNode *temp = head;
+        if (data > head->data) temp = searchBST(head->rchild, data);
+        else if (data < head->data) temp = searchBST(head->lchild, data);
+        return temp;
+    }
+    return null;
+}
+
+typedef enum Order {
+    DISORDER = -1, DECREASE, INCREASE, NOT_INITIATED
+}Order;
+
+Order isOrdered(LinkedListNode *list) {
+    Order order = NOT_INITIATED;
+    if (null == list) return order;
+    LinkedListNode *temp = list->next;
+    while (null != temp->next) {
+        int temp_order = temp->data > temp->next->data ? DECREASE : INCREASE;
+        if (NOT_INITIATED == order) order = temp_order;
+        else if (order != temp_order) {
+            order = DISORDER;
+            break;
+        }
+        temp = temp->next;
+    }
+    return order;
+}
+
+int binaryTreeDepth(TreeNode *node) {
+    if (null == node) return 0;
+    else {
+        int l = binaryTreeDepth(node->lchild);
+        int r = binaryTreeDepth(node->rchild);
+        return l > r ? l+1 : r+1;
+    }
+}
+
+int isStringMatch(char *org, char *dest, int org_len, int dest_len) {
+    assert_(dest != NULL && org != NULL && org_len > 0 && dest_len > 0, "输入的数据有误!");
+    char *temp = org;
+    while ((temp = memchr(temp, *dest, org_len - (temp - org))))
+        if (memcmp(temp, dest, dest_len) == 0) return (int) (temp - org);
+        else temp += 1;
+    return -1;
+}
+

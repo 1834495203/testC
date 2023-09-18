@@ -340,7 +340,7 @@ void removeItems4OrderList(OrderedList *list, int item);
  * @param inEnd 中序结束位置
  * @param postorder 后序遍历
  * @param postIndex  后序节点
- * @return
+ * @return 根节点
  */
 TreeNode *createTree(int *inorder, int inStart, int inEnd, int *postorder, int *postIndex);
 
@@ -354,10 +354,40 @@ TreeNode *createTree(int *inorder, int inStart, int inEnd, int *postorder, int *
 int binaryTreeNodeHeight(TreeNode *var, Node data, int current);
 
 /**
- * 判断括号是否匹配 {} () []
+ * 判断括号是否匹配 {[]} ({}) [()]
  * @param bracket 括号数组
  * @return 是否匹配
  */
 int matchBracket(char *bracket);
+
+/**
+ * 二叉查找树的查找
+ * @param head 二叉查找树的根节点
+ * @param data 值
+ * @return 如果有则返回该节点，否则返回null
+ */
+TreeNode *searchBST(TreeNode *head, Node data);
+
+/**
+ * 判断单链表是否是单增或者单减或者无序
+ * @param list 单链表
+ * @return 递增或递减或无序 2未初始化 1递增 0递减 -1无序
+ */
+int isOrdered(LinkedListNode *list);
+
+/**
+ * 求二叉树的深度
+ * @param node 二叉树根节点
+ * @return 深度
+ */
+int binaryTreeDepth(TreeNode *node);
+
+/**
+ * 检测org字符串中是否含有dest字串
+ * @param org 主串
+ * @param dest 字串
+ * @return 返回dest在org中的下标
+ */
+int isStringMatch(char *org, char *dest, int org_len, int dest_len);
 
 #endif //TESTC_TRAINSTART_H

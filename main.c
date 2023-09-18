@@ -1,3 +1,6 @@
+#include <assert.h>
+#include <setjmp.h>
+#include <stdarg.h>
 #include "stdio.h"
 #include "stdlib.h"
 #include "./base/base.h"
@@ -319,7 +322,7 @@ union testUnion1{
     char z;
 }ctc;
 
-void fuc(int *a, int *b){
+void fuc(int *a, int *b) {
     int *c;
     c = a; a = b; b = c;
 }
@@ -328,13 +331,107 @@ void testMat(int **x) {
     printf("%d", **x);
 }
 
+int height(TreeNode *node) {
+    if (null == node) return 0;
+    else {
+        int l = height(node->lchild);
+        int r = height(node->rchild);
+        return l > r ? l+1 : r+1;
+    }
+}
+
+typedef union {
+    char str[64];
+    unsigned short  int x;
+} UnC;
+
+void testError(){
+    errno = ERANGE;
+}
+
+jmp_buf exception_env;
+
+void handle_error() {
+    printf("An error occurred. Handling it...\n");
+    longjmp(exception_env, 1); // 跳回到 setjmp() 调用点
+}
+
+// 一个接受可变数量参数的函数，计算它们的总和
+int sum(int num, ...) {
+    int total = 0;
+
+    // 声明一个 va_list 对象，用于访问可变参数
+    va_list args;
+
+    // 初始化 va_list 对象，将其指向可变参数列表的开头
+    va_start(args, num);
+
+    // 遍历可变参数列表，并计算总和
+    for (int i = 0; i < num; i++) {
+        int arg = va_arg(args, int); // 从参数列表中获取一个参数
+        total += arg;
+    }
+
+    // 结束参数列表的访问
+    va_end(args);
+
+    return total;
+}
+
+union tC{
+    long long a;
+    char c;
+};
+
 int main() {
 
-    char *b = "{}[]()";
+    char *a = "A";
+    printf("%c", -(*a - 'A' + 'a'));
 
-    int i = matchBracket(b);
+//    void *(*(*p)(void *(*a)(void), int))(int, int (*(*b)(int))());
 
-    printf("%d", i);
+//    if (!setjmp(exception_env)) {
+//        printf("Program started.\n");
+//        // 模拟一个错误
+//        handle_error();
+//        printf("Result"); // 这行代码不会被执行
+//    }
+//    printf("ok");
+
+//    char str[] = "hello world anx nothing and";
+//    char target[] = " and";
+//
+//    int i = isStringMatch(str, target, sizeof(str) / sizeof(char), sizeof(target) / sizeof(char));
+//    printf("%d", i);
+
+//    TreeNode *node = createTreeNode(10);
+//    insertTreeNode(node, 14);
+//    insertTreeNode(node, 5);
+//    insertTreeNode(node, 12);
+//    insertTreeNode(node, 16);
+//
+//    int h = height(node);
+//    printf("%d", h);
+
+//    int arr[] = {9, 8, 7, 6, 5, 4};
+//    LinkedListNode *node = createList(arr, 6);
+//    int i = isOrdered(node);
+//    printf("%d", i);
+
+//    TreeNode *node = createTreeNode(25);
+//    insertTreeNode(node, 12);
+//    insertTreeNode(node, 17);
+//    insertTreeNode(node, 30);
+//    insertTreeNode(node, 37);
+//    insertTreeNode(node, 29);
+//    insertTreeNode(node, 10);
+//
+//    TreeNode *dat = searchBST(node, 30);
+//    printf("%d", dat->data);
+
+//    char *b = "{}[]()";
+//    int i = matchBracket(b);
+//    printf("%d", i);
 
 //    int inOrder[] = {4, 2, 5, 1, 6, 3, 7};
 //    int postOrder[] = {4, 5, 2, 6, 7, 3, 1};

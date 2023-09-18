@@ -7,6 +7,7 @@
 
 #include "stdlib.h"
 #include "stdio.h"
+#include "assert.h"
 
 #define null ((void *) 0)
 
@@ -29,6 +30,11 @@
 #ifndef boolean
 typedef int boolean;
 #endif
+
+#define assert_(_Expression, message) \
+ (void) \
+ ((!!(_Expression)) || \
+  (_assert(#_Expression ": " message, __FILE__, __LINE__),0))
 
 typedef char* string;
 
