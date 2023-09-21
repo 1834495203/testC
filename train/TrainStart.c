@@ -679,8 +679,106 @@ int isStringMatch(char *org, char *dest, int org_len, int dest_len) {
     assert_(dest != NULL && org != NULL && org_len > 0 && dest_len > 0, "输入的数据有误!");
     char *temp = org;
     while ((temp = memchr(temp, *dest, org_len - (temp - org))))
-        if (memcmp(temp, dest, dest_len) == 0) return (int) (temp - org);
+        //改进可能会越界的情况
+        if (dest_len > strlen(temp)) return -1;
+        else if (memcmp(temp, dest, dest_len) == 0) return (int) (temp - org);
         else temp += 1;
     return -1;
 }
 
+Node searchBinaryTree4MinNode(TreeNode *node) {
+    if (null == node) return INT_MAX;
+    else {
+        int l = searchBinaryTree4MinNode(node->lchild);
+        int r = searchBinaryTree4MinNode(node->rchild);
+        int min = r < l ? r : l;
+        return node->data < min ? node->data : min;
+    }
+}
+
+Node *searchBST4B_M(TreeNode *node) {
+    if (null == node) return null;
+    else {
+        TreeNode *left = node->lchild;
+        TreeNode *right = node->rchild;
+        while (null != left->rchild) left = left->rchild;
+        while (null != right->lchild) right = right->lchild;
+        int *rs = malloc(sizeof(int)*2);
+        *rs = left->data, *(rs+1) = right->data;
+        return rs;
+    }
+}
+
+/**
+ * 判断二叉树是否对称，即有两个二叉树在做比较，所以应该从左右两个子树出发，依次比较左右孩子
+ * @param left 左子树根节点
+ * @param right 右子树根节点
+ * @return 是否对称
+ */
+int isSymmetricT(TreeNode *left, TreeNode *right) {
+    if (null == left && null == right) return 1;
+    else if (null == left || null == right) return 0;
+    else {
+        int ll = isSymmetricT(left->lchild, right->rchild);
+        int rr = isSymmetricT(left->rchild, right->lchild);
+        return ll == 1 && rr == 1 && left->data == right->data;
+    }
+}
+
+int isSymmetric(TreeNode *node) {
+    return isSymmetricT(node->lchild, node->rchild);
+}
+
+void reverse_array(int *arr, int len){
+    for (int i = 0; i < len / 2; ++i) {
+        arr[i] = arr[i] ^ arr[len - i - 1];
+        arr[len - i - 1] = arr[i] ^ arr[len - i - 1];
+        arr[i] = arr[i] ^ arr[len - i - 1];
+    }
+}
+
+//分治
+TreeNode *sortedArray2BST(int *nums, int numSize) {
+    if (numSize == 0) return null;
+    int mid = numSize / 2;
+    TreeNode *temp = createTreeNode(nums[mid]);
+    temp->lchild = sortedArray2BST(nums, mid);
+    temp->rchild = sortedArray2BST(nums + mid + 1, numSize - mid - 1);
+    return temp;
+}
+
+//快慢指针
+int hasCycle(LinkedListNode *head) {
+    LinkedListNode *slow = head;
+    LinkedListNode *fast = head->next;
+    if (null == fast) return 0;
+    while (null != fast && null != fast->next && null != slow && slow != fast) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return null != slow && null != fast && slow == fast;
+}
+
+int hasGroupsSizeX(int *deck, int deckSize) {
+    quickSort(deck, 0, deckSize - 1);
+    int i = 0, k = 0, arr[deckSize];
+    for (int j = 0; j < deckSize - 1; ++j)
+        if (deck[j] != deck[j+1]) {
+            arr[i++] = k + 1;
+            k = 0;
+        }
+        else k++;
+    if (k != 0) arr[i++] = k + 1;
+
+    return 1;
+}
+
+// 辗转相除法求最大公约数
+int gcd(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}

@@ -385,8 +385,51 @@ union tC{
 
 int main() {
 
-    char *a = "A";
-    printf("%c", -(*a - 'A' + 'a'));
+
+
+//    FILE *p = fopen("D:\\github\\files\\temp.txt", "r+");
+//    int n = 0;
+//    fscanf_s(p, "%d", &n);
+//    printf("%d ", n);
+//    for (int i = 1; i <= 10; ++i) {
+//        fprintf(p, "%3d", i);
+//    }
+//    for (int i = 0; i < 5; ++i) {
+//        fseek(p, i*6L, SEEK_SET);
+//        fscanf_s(p, "%d", &n);
+//        printf("%d ", n);
+//    }
+//    fclose(p);
+
+//    int arr[] = {1, 1, 1, 1, 4, 4, 4, 4, 4, 4};
+//    int i = hasGroupsSizeX(arr, 10);
+//    printf("%d", i);
+
+//    int arr[] = {3, 5, 8};
+//
+//    TreeNode *temp = sortedArray2BST(arr, 3);
+//    inorderTraversal(temp);
+
+//    int arr[] = {-1, -7, 7, -4, 19, 6, -9, -5, -2, -5};
+//    LinkedListNode *temp = createList(arr, sizeof(arr) / sizeof(arr[0]));
+//    LinkedListNode *p = temp;
+//    while (p->next != null) p = p->next;
+//    p->next = p;
+//    int i = hasCycle(temp);
+//    printf("%d", i);
+
+//    int inorder[] = {-1, 2, 4, 1, 4, 2, 3};
+//    int postorder[] = {-1, 4, 2, 4, 3, 2, 1};
+//    int size = sizeof(inorder) / sizeof(inorder[0]);
+//    int postIndex = size-1;
+//    TreeNode *temp = createTree(inorder, 0, size-1, postorder, &postIndex);
+//
+//    int p = isSymmetric(temp);
+//    printf("%d", p);
+
+//
+//    int i = searchBinaryTree4MinNode(temp);
+//    printf("%d", i);
 
 //    void *(*(*p)(void *(*a)(void), int))(int, int (*(*b)(int))());
 

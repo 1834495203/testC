@@ -390,4 +390,58 @@ int binaryTreeDepth(TreeNode *node);
  */
 int isStringMatch(char *org, char *dest, int org_len, int dest_len);
 
+/**
+ * 求二叉树中最小值的节点值
+ * @param node 二叉树头节点
+ * @return 最小节点值
+ */
+Node searchBinaryTree4MinNode(TreeNode *node);
+
+/**
+ * 求出二叉排序树中左子树最大与右子树最小的节点值
+ * @param node 二叉树节点
+ * @return 节点值的数组
+ */
+Node *searchBST4B_M(TreeNode *node);
+
+/**
+ * 判断二叉树是否对称
+ * 注意是对称而不是相似
+ * @param node 根节点
+ * @return 是否对称
+ */
+int isSymmetric(TreeNode *node);
+
+/**
+ * 给你一个整数数组 nums ，其中元素已经按 升序 排列，请你将其转换为一棵 高度平衡 二叉搜索树。
+ * 高度平衡 二叉树是一棵满足「每个节点的左右两个子树的高度差的绝对值不超过 1 」的二叉树。
+ * @param nums 升序的整型数组 严格递增
+ * @param numSize 数组长度
+ * @return 根节点
+ */
+TreeNode *sortedArray2BST(int *nums, int numSize);
+
+/**
+ * 给你一个链表的头节点 head ，判断链表中是否有环。
+ * 如果链表中有某个节点，可以通过连续跟踪 next 指针再次到达，则链表中存在环。
+ * 为了表示给定链表中的环，评测系统内部使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）
+ * @param head 链表的头节点
+ * @return 是否有环
+ */
+int hasCycle(LinkedListNode *head);
+
+/**
+ * 给定一副牌，每张牌上都写着一个整数。
+ * 此时，你需要选定一个数字 X，使我们可以将整副牌按下述规则分成 1 组或更多组：
+ * 每组都有 X 张牌。
+ * 组内所有的牌上都写着相同的整数。
+ * @param deck 给定一副牌，每张牌上都写着一个整数。
+ * @param deckSize 大小
+ * @return 仅当你可选的 X >= 2 时返回 true。
+ */
+int hasGroupsSizeX(int* deck, int deckSize);
+
+// 辗转相除法求最大公约数
+int gcd(int a, int b);
+
 #endif //TESTC_TRAINSTART_H
