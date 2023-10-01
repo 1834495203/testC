@@ -85,13 +85,13 @@ int test(){
 //1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
 void sort() {
     int size;
-    scanf("%d", &size);
+    scanf_s("%d", &size);
     //动态分配二维数组
-    int **res = (int**) malloc(sizeof(int*)*size);
+    int **res = (int **) malloc(sizeof(int *)*size);
     for (int i = 0; i < size; ++i)
-        res[i] = (int*) malloc(sizeof(int)*size);
+        res[i] = (int *) malloc(sizeof(int)*size);
     int all[size*size];
-    for (int i = 0; i < size * size; ++i) scanf("%d", &all[i]);
+    for (int i = 0; i < size * size; ++i) scanf_s("%d", &all[i]);
     for (int i = 0; i < size * size; ++i) {
         for (int j = 0; j < size * size - 1 - i; ++j) {
             if (all[j] > all[j+1]) {
@@ -383,9 +383,91 @@ union tC{
     char c;
 };
 
+int *(*func1[2])(int *, int *, int *);
+int (*func2[2])(const int *, const int *);
+
+int *max(int *a, int *b, int *c) {
+    int *x = *a > *b ? a : b;
+    return *x > *c ? x : c;
+}
+
+int *min(int *a, int *b, int *c) {
+    int *x = *a < *b ? a : b;
+    return *x < *c ? x : c;
+}
+
+int mul(const int *a, const int *b) {
+    return *a * *b;
+}
+
+int ivi(const int *a, const int *b) {
+    return *b ? *a / (*b) : -1;
+}
+
+struct strX{
+    int c;
+} z;
+
 int main() {
 
+    int a = 10;
+    printf("%");
 
+//    int arr[] = {9, 8, 7, 6, 5, 4, 3, 2 ,1};
+//    shellSort(arr, 9, 4);
+//    printArray(arr, 9);
+
+//    TreeNode *root = createTreeNode(20);
+//    TreeNode *l = createTreeNode(15);
+//    TreeNode *l1 = createTreeNode(13);
+//    TreeNode *l2 = createTreeNode(18);
+//    TreeNode *l3 = createTreeNode(30);
+//    root->lchild = l;
+//    root->lchild->lchild = l1;
+//    root->lchild->rchild = l2;
+//    root->rchild = l3;
+//    printf("%d", isBST(root));
+
+//    char *s = "abaabcaba";
+//    int *next = malloc(sizeof(int)*100);
+//    getNext(s, next);
+//
+//    printArray(next, (int) strlen(s));
+
+//    int arr[] = {1, 2, 3, 4, 5};
+//
+//    LinkedListNode *head = createList(arr, 5);
+//    linkedListReverse(head);
+//    linkedListOrder(head);
+//    deleteLinkedListRange(head, 2, 3);
+//    printLinkedList(head);
+
+//    char ss[] = "abc";
+//    char *p = ss;
+//    for (; *p; p++)
+//        if (*p >= 'a' && *p <= 'z') *p = (char) (*p - 32); // Convert to uppercase
+//    printf("%s\n", ss); // Output: "ABC"
+
+
+//    int arr[] = {7, 4, 6, 7, 1, 8, 2, 7};
+//    LinkedListNode *temp = createList(arr, 8);
+//    deleteMin4LinkedList(temp);
+//    deleteInLinkedList(temp->next, temp, 7);
+//    printLinkedList(temp);
+
+//    struct strX *xx = malloc(sizeof(struct strX));
+//    printf("%d", xx->c);
+//    free(xx);
+
+//    int a = 10, b = 20, c = 30, res = 0;
+//    func1[0] = max;
+//    func1[1] = min;
+//    func2[0] = mul;
+//    func2[1] = ivi;
+//
+//    for (int i = 0; i < 2; )
+//        res += (*func2[i++])((*func1[0])(&a, &b, &c), (*func1[1])(&a, &b, &c));
+//    printf("%d", res);
 
 //    FILE *p = fopen("D:\\github\\files\\temp.txt", "r+");
 //    int n = 0;

@@ -136,10 +136,6 @@ LinkedList createList(const ListNode *arr, int len);
 void printLinkedList(LinkedList list);
 
 /**
- * *********************************************************
- */
-
-/**
  * 莱布尼茨级数
  * s = 1 - 1/3 + 1/5 - 1/7 + ... + 1/101
  */
@@ -443,5 +439,67 @@ int hasGroupsSizeX(int* deck, int deckSize);
 
 // 辗转相除法求最大公约数
 int gcd(int a, int b);
+
+/**
+ * 删除指定值的节点
+ * @param node 头节点
+ * @param pre 节点之前的节点
+ * @param k 值
+ */
+void deleteInLinkedList(LinkedListNode *node, LinkedListNode *pre, ListNode k);
+
+/**
+ * 删除链表中最小节点值
+ * @param node 根节点
+ */
+void deleteMin4LinkedList(LinkedListNode *node);
+
+/**
+ * 链表的就地逆置
+ * @param head 头节点
+ */
+void linkedListReverse(LinkedListNode *head);
+
+/**
+ * 链表的递增排序
+ * @param head 头节点
+ */
+void linkedListOrder(LinkedListNode *head);
+
+/**
+ * 删除链表中ab范围内的节点
+ * @param head
+ * @param a
+ * @param b
+ */
+void deleteLinkedListRange(LinkedListNode *head, int a, int b);
+
+/**
+ * 二叉树的叶子节点个数
+ * @param root 根节点
+ * @return 个数
+ */
+int countLeaf(TreeNode *root);
+
+/**
+ * 匹配模式 求next数组
+ * @param s 字串
+ * @param next next数组
+ */
+void getNext(char *s, int next[]);
+
+/**
+ * 判断是否为二叉排序树
+ * @param root 根节点
+ */
+int isBST(TreeNode *root);
+
+/**
+ * 希尔排序
+ * @param arr 数组
+ * @param len 长度
+ * @param dk 增量
+ */
+void shellSort(int *arr, int len, int dk);
 
 #endif //TESTC_TRAINSTART_H

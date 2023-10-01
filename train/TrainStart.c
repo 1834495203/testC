@@ -465,9 +465,9 @@ void findSaddlePoint(int **matrix, int m, int n) {
 
 void adjustMaxHeap(int *arr, int len, int k) {
     int temp = arr[k];
-    //这里i初始化是k节点的左节点，同时循环时i会指向较大的那个节点
+    //这里i初始化是k节点的左节点下标，同时循环时i会指向较大的那个子节点
     for (int i = k*2+1; i <= len; i=i*2+1) {
-        //左节点与右节点比较
+        //左节点与右节点比较, 指向最大的孩子节点
         if (i < len && arr[i] < arr[i+1]) i++;
         //调整完成
         if (temp >= arr[i]) break;
@@ -781,4 +781,127 @@ int gcd(int a, int b) {
         a = temp;
     }
     return a;
+}
+
+void deleteInLinkedList(LinkedListNode *node, LinkedListNode *pre, ListNode k) {
+    if (NULL == node) return;
+    else {
+        deleteInLinkedList(node->next, node, k);
+        if (node->data == k) {
+            LinkedListNode *temp = node;
+            pre->next = temp->next;
+            free(temp);
+        }
+    }
+}
+
+void deleteMin4LinkedList(LinkedListNode *node) {
+    LinkedListNode *p = NULL;
+    node = node->next;
+    while (NULL != node->next) {
+        if (p == NULL || p->next->data > node->next->data) {
+            p = node;
+        }
+        node = node->next;
+    }
+    if (p != null) {
+        LinkedListNode *temp = p->next;
+        if (temp == null) p->next = null;
+        else {
+            p->next = temp->next;
+            free(temp);
+        }
+    }
+}
+
+void linkedListReverse(LinkedListNode *head) {
+    if (null == head || null == head->next) return;
+    LinkedListNode *p = head->next;
+    LinkedListNode *q = p;
+    while (p->next != null) {
+        head->next = p->next;
+        p = p->next;
+    }
+    while (p != q) {
+        LinkedListNode *temp = q->next;
+        q->next = p->next;
+        p->next = q;
+        q = temp;
+    }
+}
+
+void linkedListOrder(LinkedListNode *head) {
+    if (null == head || null == head->next) return;
+    LinkedListNode *p = head->next;
+    while (p) {
+        LinkedListNode *temp = p, *min = temp;
+        for(; temp; temp = temp->next)
+            if (temp->data < min->data) min = temp;
+        int data = p->data;
+        p->data = min->data;
+        min->data = data;
+        p = p->next;
+    }
+}
+
+void deleteLinkedListRange(LinkedListNode *head, int a, int b) {
+    if (null == head || null == head->next) return;
+    LinkedListNode *p = head;
+    while (p->next) {
+        if (p->next->data >= a && p->next->data <= b) {
+            LinkedListNode *temp = p->next;
+            p->next = temp->next;
+            free(temp);
+        }
+        p = p->next;
+    }
+}
+
+int countLeaf(TreeNode *root) {
+    if (null == root) return 0;
+    else {
+        int l = countLeaf(root->lchild);
+        int r = countLeaf(root->rchild);
+        int current = root->lchild == null && root->rchild == null ? 1 : 0;
+        return l + r + current;
+    }
+}
+
+void getNext(char *s, int *next) {
+    int i = 1, j = 0;
+    next[i] = 0;
+    while (i < strlen(s)) {
+        if (j == 0 || s[i] == s[j]) {
+            i++; j++;
+            next[i] = j;
+        } else j = next[j];
+    }
+}
+
+int isBST(TreeNode *root) {
+    if (root == null) return 1;
+    else {
+        int l = isBST(root->lchild);
+        int r = isBST(root->rchild);
+        int ll = 1, rr = 1;
+        if (root->lchild != null)
+            ll = root->data > root->lchild->data;
+        if (root->rchild != null)
+            rr = root->data < root->rchild->data;
+        return l && r && ll && rr;
+    }
+}
+
+void shellSort(int *arr, int len, int dk) {
+    int i, j;
+    for (; dk >= 1; dk /= 2) {
+        for (i = dk + 1; i < len; i++) {
+            int temp = arr[i];
+            for (j = i-dk; j >= 0 && arr[j] > temp; j-=dk) {
+                if (arr[j] > temp) arr[j+dk] = arr[j];
+                else break;
+            }
+            arr[j+dk] = temp;
+        }
+    }
 }
