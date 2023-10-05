@@ -408,10 +408,85 @@ struct strX{
     int c;
 } z;
 
+void reverser(char *s) {
+    char *p = s, c;
+    while (*p) p++;
+    p--;
+    if (s < p) {
+        c = *s;
+        *s = *p;
+        *p = '\0';
+        reverser(s+1);
+        *p = c;
+    }
+}
+
+union {
+    unsigned char c;
+    unsigned int i[4];
+}zx;
+
+void ssss(int **x){
+    *x = malloc(sizeof(int));
+    **x = 5;
+}
+
 int main() {
 
-    int a = 10;
-    printf("%");
+    TreeNode *root = createTreeNode(20);
+    insertTreeNode(root, 10);
+    insertTreeNode(root, 5);
+    insertTreeNode(root, 15);
+    insertTreeNode(root, 40);
+    insertTreeNode(root, 35);
+    insertTreeNode(root, 60);
+    printBSTNotLessThanX(root, 12);
+
+//    int var1[] = {11, 8, 7, 6, 4, 2, 1}, var2[] = {19, 12, 9, 6, 5, 3};
+//    LinkedListNode *arr1 = createList(var1, 7);
+//    LinkedListNode *arr2 = createList(var2, 6);
+//    LinkedListNode *temp = intersection(arr1, arr2);
+//    LinkedListNode *temp = mergeIdenticalElements(arr1, arr2);
+//    printLinkedList(temp);
+//    mergeTwoLinkedListInDecrement(arr1, arr2);
+//    printLinkedList(arr1);
+
+//    int arr[] = {88, 77, 77, 77, 55, 55, 44, 44, 33, 33, 22, 22, 11, 11};
+//    LinkedListNode *temp = createList(arr, sizeof(arr) / sizeof(arr[0]));
+//    removeIdenticalElements(temp);
+//    printLinkedList(temp);
+
+//    int arr[] = {11, 22, 33 ,44, 55, 66, 77};
+//    LinkedListNode *head = createList(arr, 7);
+//    LinkedListNode *a, *b;
+//    divideLinkedListIntermittent(head, &a, &b);
+//    printLinkedList(a);
+
+//    int arr[] = {11, 22, 33, 44, 55, 66, 77};
+//    int *even, *odd;
+//    int even_len, odd_len;
+//    divideParity(arr, 7, &odd, &odd_len, &even, &even_len);
+//    for (int i = 0; i < odd_len; ++i) printf("%d ", odd[i]);
+
+//    TreeNode *root = createTreeNode(50);
+//    insertTreeNode(root, 100);
+//    insertTreeNode(root, 25);
+//    insertTreeNode(root, 150);
+//    insertTreeNode(root, 15);
+//    insertTreeNode(root, 75);
+//    insertTreeNode(root, 5);
+//    insertTreeNode(root, 35);
+//    deletePresetNode(&root, 100);
+//    int i = isBalanceBinaryTree(root);
+//    printf("%d", i);
+//    inorderTraversal(root);
+//    inorderTraversal(root);
+
+//    TreeNode *root = createTreeNode(10);
+//    insertTreeNode(root, 15);
+//    insertTreeNode(root, 5);
+//    int i = getBinaryTreeHeight(root);
+//    printf("%d", i);
 
 //    int arr[] = {9, 8, 7, 6, 5, 4, 3, 2 ,1};
 //    shellSort(arr, 9, 4);

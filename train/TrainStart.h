@@ -8,6 +8,7 @@
 #include "../base/base.h"
 #include "../list/base/listData.h"
 #include "../tree/base/treeData.h"
+#include "../stack/stackData.h"
 
 /**
  * 打印数组
@@ -502,4 +503,119 @@ int isBST(TreeNode *root);
  */
 void shellSort(int *arr, int len, int dk);
 
+/**
+ * 非递归求二叉树的高度
+ * @param root 根节点
+ * @return 高度
+ */
+int getBinaryTreeHeight(TreeNode *root);
+
+/**
+ * 判断是否为完全二叉树
+ * @param root 根节点
+ * @return 是否为完全二叉树
+ */
+int isCompleteBinaryTree(TreeNode *root);
+
+/**
+ * 计算二叉树中所有度为二的节点
+ * @param root 根节点
+ * @return 度为2节点的数量
+ */
+int getDegreeOf2InBinaryTree(TreeNode *root);
+
+/**
+ * 交换二叉树的左右子节点
+ * @param root
+ */
+void exchangeChildInBinaryTree(TreeNode *root);
+
+/**
+ * 返回给定二叉树的先序遍历中index下标的节点
+ * @param root 根节点
+ * @param index 下标
+ * @return 指定二叉树
+ */
+TreeNode *getPresetPreorderNode(TreeNode *root, int index);
+
+/**
+ * 删除指定节点值为data的子树，并释放相应空间
+ * @param root 根节点
+ * @param data 值
+ */
+void deletePresetNode(TreeNode **root, Node data);
+
+/**
+ * 打印指定节点的祖先
+ * @param root 根节点
+ * @param data 指定节点
+ */
+int printAncestorsInBinaryTree(TreeNode *root, Node data);
+
+/**
+ * 是否是二叉平衡树
+ * @param root 根节点
+ * @return 是否是二叉平衡树
+ */
+int isBalanceBinaryTree(TreeNode *root);
+
+/**
+ * 将数组分为奇数组和偶数组
+ * @param arr 数组
+ * @param odd 奇数组
+ * @param even 偶数组
+ */
+void divideParity(const int *arr, int len, int **odd, int *odd_len, int **even, int *even_len);
+
+/**
+ * 拆分链表， 隔一个为一个链表
+ * @param array 原链表
+ * @param a 链表a
+ * @param b 链表b
+ */
+void divideLinkedListIntermittent(LinkedListNode *arr, LinkedListNode **a, LinkedListNode **b);
+
+/**
+ * 删除在递增有序的链表中相同的元素
+ * @param arr 链表
+ */
+void removeIdenticalElements(LinkedListNode *arr);
+
+/**
+ * 将两个递增有序的链表合并成一个递减的链表
+ * @param var1 链表1
+ * @param var2 链表2
+ */
+void mergeTwoLinkedListInDecrement(LinkedListNode *var1, LinkedListNode *var2);
+
+/**
+ * 获取两个链表中的公共元素
+ * @param var1 链表1
+ * @param var2 链表2
+ * @return 公共元素链表
+ */
+LinkedListNode *mergeIdenticalElements(LinkedListNode *var1, LinkedListNode *var2);
+
+/**
+ * 求两个链表的交集
+ * @param var1 链表1
+ * @param var2 链表2
+ * @return 交集链表
+ */
+LinkedListNode *intersection(LinkedListNode *var1, LinkedListNode *var2);
+
+/**
+ * 求出BST中的最小值和最大值
+ * @param root 根节点
+ * @param max 最大值
+ * @param min 最小值
+ */
+void getMinMaxInBST(TreeNode *root, Node *max, Node *min);
+
+/**
+ * 递增输出在二叉排序树中不小与x的数据
+ * @param root 根节点
+ * @param x 数据
+ */
+void printBSTNotLessThanX(TreeNode *root, Node x);
 #endif //TESTC_TRAINSTART_H

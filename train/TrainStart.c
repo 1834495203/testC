@@ -572,6 +572,20 @@ int findRootIndex(const int *inorder, int inStart, int inEnd, int rootValue) {
     return -1;
 }
 
+/**
+ *  用法
+ *  int inorder[] = {-1, 2, 4, 1, 4, 2, 3};
+ *  int postorder[] = {-1, 4, 2, 4, 3, 2, 1};
+ *  int size = sizeof(inorder) / sizeof(inorder[0]);
+ *  int postIndex = size-1;
+ *  TreeNode *temp = createTree(inorder, 0, size-1, postorder, &postIndex);
+ * @param inorder 中序
+ * @param inStart 中序的开头下标
+ * @param inEnd 中序的结尾下标
+ * @param postorder 后序
+ * @param postIndex 后序结尾下标 （why:因为后序遍历中根节点总在最后一个位置）
+ * @return 根节点
+ */
 TreeNode *createTree(int *inorder, int inStart, int inEnd, int *postorder, int *postIndex) {
     if (inStart > inEnd) return null;
 
@@ -903,5 +917,299 @@ void shellSort(int *arr, int len, int dk) {
             }
             arr[j+dk] = temp;
         }
+    }
+}
+
+//非递归获取树的高度(层次遍历)
+int getBinaryTreeHeight(TreeNode *root) {
+    if (root == null) return 0;
+    int front = -1, rear = -1;
+    int last = 0, level = 0;
+    TreeNode *queue[100];
+    queue[++rear] = root;
+    while (front < rear) {
+        TreeNode *temp = queue[++front];
+        if (temp->lchild) queue[++rear] = temp->lchild;
+        if (temp->rchild) queue[++rear] = temp->rchild;
+        // last指向当前层的最右节点，每次出队与last比较，若相等则层数加1，同时last指向下一层最右节点
+        if (front == last) {
+            level++;
+            last = rear;
+        }
+    }
+    return level;
+}
+
+//层次遍历的思路
+int isCompleteBinaryTree(TreeNode *root) {
+    if (root == null) return 0;
+    TreeNode *queue[100];
+    int front = -1, rear = -1;
+
+    queue[++rear] = root;
+    while (rear > front) {
+        TreeNode *temp = queue[++front];
+        if (temp == null) {
+            TreeNode *p;
+            while (rear > front) {
+                p = queue[++front];
+                if (p) return 0;
+            }
+        }
+        queue[++rear] = temp->lchild;
+        queue[++rear] = temp->rchild;
+    }
+    return 1;
+}
+
+int getDegreeOf2InBinaryTree(TreeNode *root) {
+    if (root == null) return 0;
+    else {
+        int l = getDegreeOf2InBinaryTree(root->lchild);
+        int r = getDegreeOf2InBinaryTree(root->rchild);
+        if (root->lchild != null && root->rchild != null) return 1 + l + r;
+        return l + r;
+    }
+}
+
+/**
+ * 这段代码实现了一个操作，它交换了二叉树中每个节点的左子树和右子树。
+ * 这是一个典型的二叉树镜像（Binary Tree Mirror）操作，也被称为翻转二叉树。
+ * @param root 根节点
+ */
+void exchangeChildInBinaryTree(TreeNode *root) {
+    if (root == null) return;
+    else {
+        exchangeChildInBinaryTree(root->lchild);
+        exchangeChildInBinaryTree(root->rchild);
+        TreeNode *temp = root->lchild;
+        root->lchild = root->rchild;
+        root->rchild = temp;
+    }
+}
+
+TreeNode *getPresetPreorderNode(TreeNode *root, int index) {
+    if (root == null || index < 0) return null;
+    else if (index == 0) return root;
+    else {
+        // 递归访问左子树，并在找到目标节点后立即返回
+        TreeNode *l = getPresetPreorderNode(root->lchild, --index);
+        if (l) return l;
+        // 递归访问右子树，并在找到目标节点后立即返回
+        TreeNode *r = getPresetPreorderNode(root->rchild, --index);
+        if (r) return r;
+    }
+    return null;
+}
+
+void deletePresetNode(TreeNode **root, Node data) {
+    if (*root == null) return;
+    if ((*root)->data == data) {
+        TreeNode* left = (*root)->lchild;
+        TreeNode* right = (*root)->rchild;
+        free(*root);
+        *root = null; // 删除匹配节点
+
+        // 递归删除左子树和右子树
+        deletePresetNode(&left, data);
+        deletePresetNode(&right, data);
+    } else {
+        // 递归遍历左子树和右子树
+        deletePresetNode(&(*root)->lchild, data);
+        deletePresetNode(&(*root)->rchild, data);
+    }
+}
+
+int printAncestorsInBinaryTree(TreeNode *root, Node data) {
+    // 如果树为空，返回0表示未找到
+    if (root == null) return 0;
+
+    // 如果找到目标节点，返回1表示找到
+    if (root->data == data) return 1;
+
+    // 在左子树中查找目标节点
+    int left = printAncestorsInBinaryTree(root->lchild, data);
+
+    // 在右子树中查找目标节点
+    int right = printAncestorsInBinaryTree(root->rchild, data);
+
+    // 如果目标节点在左子树或右子树中找到，打印当前节点作为祖先
+    if (left || right) printf("%d ", root->data);
+
+    // 返回是否找到目标节点
+    return left || right;
+}
+
+int isBalanceBinaryTree(TreeNode *root) {
+    if (root == null) return 0;
+    else {
+        int l = isBalanceBinaryTree(root->lchild);
+        int r = isBalanceBinaryTree(root->rchild);
+        if (root->lchild != null) l += 1;
+        if (root->rchild != null) r += 1;
+        return abs(l - r) <= 1;
+    }
+}
+
+void divideParity(const int *arr, int len, int **odd, int *odd_len, int **even, int *even_len) {
+    if (len == 0) return;
+    int current_index = 1, odd_index = 0, even_index = 0;
+    if (len % 2) {
+        *odd_len = (len/2) + 1;
+        *even_len = *odd_len - 1;
+    } else *odd_len = *even_len = len / 2;
+    *odd = malloc(*odd_len * sizeof(int));
+    *even = malloc(*even_len * sizeof(int));
+    while (current_index <= len) {
+        if (current_index % 2) (*odd)[odd_index++] = arr[current_index - 1];
+        else (*even)[even_index++] = arr[current_index - 1];
+        current_index++;
+    }
+}
+
+void divideLinkedListIntermittent(LinkedListNode *arr, LinkedListNode **a, LinkedListNode **b) {
+    if (arr == null) return;
+    //a要采用头插法
+    *a = malloc(sizeof(LinkedListNode));
+    (*a)->next = null;
+    //b要采用尾插法
+    *b = malloc(sizeof(LinkedListNode));
+    (*b)->next = null;
+    LinkedListNode *b_rear = null;
+    int bool = 1;
+    while (arr->next != null) {
+        LinkedListNode *temp = malloc(sizeof(LinkedListNode));
+        temp->data = arr->next->data;
+        if (bool) {
+            temp->next = (*a)->next;
+            (*a)->next = temp;
+        } else {
+            temp->next = null;
+            if (b_rear == null) {
+                (*b)->next = temp;
+                b_rear = temp;
+            } else {
+                b_rear->next = temp;
+                b_rear = temp;
+            }
+        }
+        bool = !bool;
+        arr = arr->next;
+    }
+}
+
+void removeIdenticalElements(LinkedListNode *arr) {
+    if (arr == null) return;
+    ListNode temp = arr->next->data;
+    arr = arr->next;
+    while (arr->next != null) {
+        if (arr->next->data == temp) {
+            LinkedListNode *p = arr->next;
+            arr->next = p->next;
+            free(p);
+        } else {
+            arr = arr->next;
+            temp = arr->data;
+        }
+    }
+}
+
+void mergeTwoLinkedListInDecrement(LinkedListNode *var1, LinkedListNode *var2) {
+    LinkedListNode *p = var1->next, *q = var2->next;
+    var1->next = null;
+    while (p != null && q != null) {
+        LinkedListNode *temp = malloc(sizeof(LinkedListNode));
+        temp->data = p->data < q->data ? p->data : q->data;
+        temp->next = var1->next;
+        var1->next = temp;
+        if (temp->data == p->data)
+            p = p->next;
+        else if (temp->data == q->data)
+            q = q->next;
+    }
+    while (p) {
+        LinkedListNode *temp = malloc(sizeof(LinkedListNode));
+        temp->data = p->data;
+        temp->next = var1->next;
+        var1->next = temp;
+        p = p->next;
+    }
+    while (q) {
+        LinkedListNode *temp = malloc(sizeof(LinkedListNode));
+        temp->data = q->data;
+        temp->next = var1->next;
+        var1->next = temp;
+        q = q->next;
+    }
+}
+
+LinkedListNode *mergeIdenticalElements(LinkedListNode *var1, LinkedListNode *var2) {
+    LinkedListNode *q = var1->next, *p = var2->next;
+    LinkedListNode *res = malloc(sizeof(LinkedListNode));
+    res->next = null;
+    while (p && q) {
+        LinkedListNode *temp = malloc(sizeof(LinkedListNode));
+        if (p->data == q->data) {
+            temp->data = q->data;
+            temp->next = res->next;
+            res->next =temp;
+            p = p->next;
+            q = q->next;
+        }
+        else {
+            if (p->data > q->data) q = q->next;
+            else p = p->next;
+        }
+    }
+    return res;
+}
+
+//TODO 待修改的算法
+LinkedListNode *intersection(LinkedListNode *var1, LinkedListNode *var2) {
+    LinkedListNode* intersection = NULL;
+    LinkedListNode* current = NULL;
+
+    while (var1 != NULL && var2 != NULL) {
+        if (var1->data == var2->data) {
+            // 创建新节点并添加到结果链表
+            LinkedListNode* newNode = (LinkedListNode*)malloc(sizeof(LinkedListNode));
+            newNode->data = var1->data;
+            newNode->next = NULL;
+
+            if (intersection == NULL) {
+                intersection = newNode;
+                current = intersection;
+            } else {
+                current->next = newNode;
+                current = newNode;
+            }
+
+            var1 = var1->next;
+            var2 = var2->next;
+        } else if (var1->data < var2->data) {
+            var1 = var1->next;
+        } else {
+            var2 = var2->next;
+        }
+    }
+
+    return intersection;
+}
+
+void getMinMaxInBST(TreeNode *root, Node *max, Node *min) {
+    if (root == null) return;
+    TreeNode *p = root->lchild, *q = root->rchild;
+    while (p->lchild) p = p->lchild;
+    while (q->rchild) q = q->rchild;
+    *max = q->data;
+    *min = p->data;
+}
+
+void printBSTNotLessThanX(TreeNode *root, Node x) {
+    if (root == null) return;
+    else {
+        printBSTNotLessThanX(root->rchild, x);
+        if (root->data >= x) printf("%d ", root->data);
+        printBSTNotLessThanX(root->lchild, x);
     }
 }

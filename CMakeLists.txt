@@ -8,4 +8,6 @@ add_executable(testC main.c tree/base/treeQuiz.c tree/base/treeQuiz.h queue/base
         train/TrainStart.h
         graph/GraphData.c
         graph/GraphData.h
+        stack/stackData.c
+        stack/stackData.h
 )
