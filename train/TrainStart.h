@@ -618,4 +618,102 @@ void getMinMaxInBST(TreeNode *root, Node *max, Node *min);
  * @param x 数据
  */
 void printBSTNotLessThanX(TreeNode *root, Node x);
+
+/**
+ * 找到p节点和q节点最近的祖先节点
+ * @param root 根节点
+ * @param p 节点p
+ * @param q 节点q
+ * @return 祖先节点
+ */
+TreeNode *findTheNearestAncestor(TreeNode *root, TreeNode *p, TreeNode *q);
+
+/**
+ * 计算二叉树的最大宽度
+ * @param root 根节点
+ * @return 宽度
+ */
+int getWidthOfBinaryTree(TreeNode *root);
+
+/**
+ * 在满二叉树中由先序序列求后序序列
+ * @param preorder 先序序列
+ * @return 后序序列
+ */
+void pre2Post(char preOrder[], int preStart, int preEnd, char postOrder[], int postStart, int postEnd);
+
+/**
+ * 后序遍历的非递归算法
+ * @param root 根节点
+ */
+void postOrderNoRe(TreeNode *root);
+
+/**
+ * 将节点按从左到右的顺序连接成链表，并用叶节点的右指针来存放单链表指针
+ * @param root 根节点
+ */
+void linkedLeafNode(TreeNode *root);
+
+/**
+ * 双向冒泡排序 一趟把最大的元素放在最后面 一趟把最小的元素放在最前面
+ * @param arr 数组
+ * @param len 长度
+ */
+void twoWayBubbleSort(int *arr, int len);
+
+/**
+ * 将所有奇数移到偶数的前面
+ * @param arr
+ * @param len
+ */
+void oddFrontOfEven(int *arr, int len);
+
+/**
+ * 找到第x小的元素
+ * @param arr 数组
+ * @param len 长度
+ * @param x 第x小的元素
+ * @return 第x小的元素的值
+ */
+int findMinorX(int *arr, int len, int x);
+
+/**
+ * 用快速选择算法实现 找到第x小的元素
+ * @param arr 数组
+ * @param low 最小下标
+ * @param high 最大下标
+ * @param k 第k小
+ * @return 第k小的元素值
+ */
+int kthSmallest(int arr[], int low, int high, int k);
+
+/**
+ * 荷兰国旗问题 将数组中的字符串由 红 白 蓝 的顺序排列好
+ * @param flag 字符串数组
+ * @param len 长度
+ */
+void dutchFlagProblem(char *flag[], int len);
+
+/**
+ * dist是否为org的子序列
+ * @param org 原链表
+ * @param dist 子链表
+ * @return 是否是子序列
+ */
+int isSubsequence(LinkedListNode *org, LinkedListNode *dist);
+
+/**
+ * 复制二叉树
+ * @param root 根节点
+ * @param copy 新的二叉树
+ */
+void copyBinaryTree(TreeNode *root, TreeNode **copy);
+
+/**
+ * 将无序链表分为由递增的奇数链和偶数链
+ * @param list 链表
+ * @param odd 奇数链表
+ * @param even 偶数链表
+ */
+void divideOddEven(LinkedListNode *list, LinkedListNode **odd, LinkedListNode **even);
 #endif //TESTC_TRAINSTART_H

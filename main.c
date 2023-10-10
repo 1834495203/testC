@@ -433,18 +433,93 @@ void ssss(int **x){
 
 int main() {
 
-    TreeNode *root = createTreeNode(20);
-    insertTreeNode(root, 10);
-    insertTreeNode(root, 5);
-    insertTreeNode(root, 15);
-    insertTreeNode(root, 40);
-    insertTreeNode(root, 35);
-    insertTreeNode(root, 60);
-    printBSTNotLessThanX(root, 12);
+//    int arr1[] = {5, 3, 7, 2, 6, 8, 9, 4, 1};
+//    LinkedListNode *temp = createList(arr1, 9);
+//    LinkedListNode *odd, *even;
+//    divideOddEven(temp, &odd, &even);
+//    getch();
 
-//    int var1[] = {11, 8, 7, 6, 4, 2, 1}, var2[] = {19, 12, 9, 6, 5, 3};
-//    LinkedListNode *arr1 = createList(var1, 7);
-//    LinkedListNode *arr2 = createList(var2, 6);
+//    TreeNode *root = createTreeNode(50);
+//    insertTreeNode(root, 25);
+//    insertTreeNode(root, 100);
+//    insertTreeNode(root, 15);
+//    insertTreeNode(root, 35);
+//    insertTreeNode(root, 75);
+//    insertTreeNode(root, 125);
+//    TreeNode *copy = null;
+//    copyBinaryTree(root, &copy);
+//    getch();
+
+//    int var1[] = {1, 5, 2, 7, 6, 9, 3, 5, 4};
+//    int var2[] = {7, 6, 9};
+//    LinkedListNode *l1 = createList(var1, 9);
+//    LinkedListNode *l2 = createList(var2, 3);
+//    int i = isSubsequence(l1, l2);
+//    printf("%d", i);
+
+//    char *flag[] = {"blue", "white", "red", "red", "white", "blue", "red", "blue"};
+//    dutchFlagProblem(flag, 8);
+//    for (int i = 0; i < 8; ++i) {
+//        printf("%s ", flag[i]);
+//    }
+
+//    int arr[] = {5, 4, 7, 2, 8, 1, 9};
+//    twoWayBubbleSort(arr, 7);
+//    oddFrontOfEven(arr, 7);
+//    int x = findMinorX(arr, 7, 2);
+//    int x = kthSmallest(arr, 0, 6, 3);
+//    printf("%d", x);
+//    printArray(arr, 7);
+
+//    TreeNode *root = createTreeNode(10);
+//    insertTreeNode(root, 5);
+//    insertTreeNode(root, 15);
+//    insertTreeNode(root, 2);
+//    insertTreeNode(root, 7);
+//    insertTreeNode(root, 12);
+//    insertTreeNode(root, 17);
+//    linkedLeafNode(root);
+//    getch();
+
+//    // 示例前序遍历序列
+//    char preOrder[] = "ABDECF";
+//    int preOrderSize = sizeof(preOrder) - 1;  // 减去结尾的 '\0'
+//
+//    // 创建后序遍历序列的数组，并初始化为 '\0'
+//    char postOrder[preOrderSize + 1];
+//    for (int i = 0; i <= preOrderSize; i++) {
+//        postOrder[i] = '\0';
+//    }
+//
+//    // 调用函数进行转换
+//    pre2Post(preOrder, 0, preOrderSize - 1, postOrder, 0, preOrderSize - 1);
+//
+//    // 输出后序遍历序列
+//    printf("后序遍历序列: %s\n", postOrder);
+
+//    TreeNode *root = createTreeNode(20);
+//    insertTreeNode(root, 10);
+//    insertTreeNode(root, 5);
+//    insertTreeNode(root, 15);
+//    insertTreeNode(root, 40);
+//    insertTreeNode(root, 35);
+//    insertTreeNode(root, 30);
+//    insertTreeNode(root, 37);
+//    insertTreeNode(root, 60);
+//    insertTreeNode(root, 1);
+//    insertTreeNode(root, 7);
+//    insertTreeNode(root, 12);
+//    postOrderNoRe(root);
+//    TreeNode *p = root->rchild->lchild->lchild;
+//    TreeNode *q = root->rchild->rchild;
+//    int temp = getWidthOfBinaryTree(root);
+//    TreeNode *temp = findTheNearestAncestor(root, p, q);
+//    printf("%d", temp);
+//    printBSTNotLessThanX(root, 12);
+
+//    int var1[] = {11, 8, 7, 6, 5, 4, 2, 1}, var2[] = {19, 12, 9, 6, 5, 3, 2};
+//    LinkedListNode *arr1 = createList(var1, 8);
+//    LinkedListNode *arr2 = createList(var2, 7);
 //    LinkedListNode *temp = intersection(arr1, arr2);
 //    LinkedListNode *temp = mergeIdenticalElements(arr1, arr2);
 //    printLinkedList(temp);

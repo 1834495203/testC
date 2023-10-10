@@ -256,7 +256,7 @@ void doWhile_555555() {
 
 void reverse_() {
     int input;
-    scanf("%d", &input);
+    scanf_s("%d", &input);
     while (input) {
         printf("%d ", input%10);
         input /= 10;
@@ -1166,34 +1166,40 @@ LinkedListNode *mergeIdenticalElements(LinkedListNode *var1, LinkedListNode *var
 
 //TODO 待修改的算法
 LinkedListNode *intersection(LinkedListNode *var1, LinkedListNode *var2) {
-    LinkedListNode* intersection = NULL;
-    LinkedListNode* current = NULL;
-
-    while (var1 != NULL && var2 != NULL) {
-        if (var1->data == var2->data) {
-            // 创建新节点并添加到结果链表
-            LinkedListNode* newNode = (LinkedListNode*)malloc(sizeof(LinkedListNode));
-            newNode->data = var1->data;
-            newNode->next = NULL;
-
-            if (intersection == NULL) {
-                intersection = newNode;
-                current = intersection;
-            } else {
-                current->next = newNode;
-                current = newNode;
-            }
-
-            var1 = var1->next;
-            var2 = var2->next;
-        } else if (var1->data < var2->data) {
-            var1 = var1->next;
+    LinkedListNode *pa = var1->next;
+    LinkedListNode *pb = var2->next;
+    LinkedListNode *u, *pc = var1;
+    while (pa && pb) {
+        if (pa->data == pb->data) {
+            pc->next = pa;
+            pc = pa;
+            pa = pa->next;
+            u = pb;
+            pb = pb->next;
+            free(u);
+        } else if (pa->data < pb->data) {
+            u = pa;
+            pa = pa->next;
+            free(u);
         } else {
-            var2 = var2->next;
+            u = pb;
+            pa = pa->next;
+            free(u);
         }
     }
-
-    return intersection;
+    while (pa) {
+        u = pa;
+        pa = pa->next;
+        free(u);
+    }
+    while (pb) {
+        u = pb;
+        pb = pb->next;
+        free(u);
+    }
+    pc->next = null;
+    free(var2);
+    return var1;
 }
 
 void getMinMaxInBST(TreeNode *root, Node *max, Node *min) {
@@ -1211,5 +1217,308 @@ void printBSTNotLessThanX(TreeNode *root, Node x) {
         printBSTNotLessThanX(root->rchild, x);
         if (root->data >= x) printf("%d ", root->data);
         printBSTNotLessThanX(root->lchild, x);
+    }
+}
+
+TreeNode *findTheNearestAncestor(TreeNode *root, TreeNode *p, TreeNode *q) {
+    if (root == null) return null;
+    if (root == q || root == p) return root;
+    TreeNode *l = findTheNearestAncestor(root->lchild, p, q);
+    TreeNode *r = findTheNearestAncestor(root->rchild, p, q);
+    if (l != null && r != null) return root;
+    else return l != null ? l : r;
+}
+
+//层次遍历的思想 用队列
+int getWidthOfBinaryTree(TreeNode *root) {
+    TreeNode *queue[100];
+    int front = -1, rear = -1, max = 0;
+    queue[++rear] = root;
+    //last代表下层的最后一个节点在队列中的位置
+    int last = rear;
+    while (rear > front) {
+        TreeNode *temp = queue[++front];
+        if (temp->lchild != null) queue[++rear] = temp->lchild;
+        if (temp->rchild != null) queue[++rear] = temp->rchild;
+        //当last = front 意味着该层已经全部走完了， 此时队列中的rear指向的是下一层的最后一个节点的下标
+        if (last == front) {
+            max = (rear - front) > max ? (rear - front) : max;
+            last = rear;
+        }
+    }
+    return max;
+}
+
+//TODO 理解下
+/**
+ * 示例前序遍历序列
+ * char preOrder[] = "ABDECF";
+ * int preOrderSize = sizeof(preOrder) - 1;  // 减去结尾的 '\0'
+ * // 创建后序遍历序列的数组，并初始化为 '\0'
+ * char postOrder[preOrderSize + 1];
+ * for (int i = 0; i <= preOrderSize; i++) {
+ *      postOrder[i] = '\0';
+ *  }
+ *  // 调用函数进行转换
+ *  pre2Post(preOrder, 0, preOrderSize - 1, postOrder, 0, preOrderSize - 1);
+ *  // 输出后序遍历序列
+ *  printf("后序遍历序列: %s\n", postOrder);
+ */
+void pre2Post(char preOrder[], int preStart, int preEnd, char postOrder[], int postStart, int postEnd) {
+    if (preStart > preEnd || postStart > postEnd) {
+        return;
+    }
+
+    // 前序遍历的第一个节点一定是根节点
+    char rootData = preOrder[preStart];
+    postOrder[postEnd] = rootData;
+
+    // 查找根节点在前序遍历中的位置
+    int rootIndex;
+    for (rootIndex = preStart; rootIndex <= preEnd; rootIndex++) {
+        if (preOrder[rootIndex] == rootData) {
+            break;
+        }
+    }
+
+    // 计算左子树的节点数量
+    int leftSubtreeSize = rootIndex - preStart;
+
+    // 递归处理左子树
+    pre2Post(preOrder, preStart + 1, preStart + leftSubtreeSize, postOrder, postStart, postStart + leftSubtreeSize - 1);
+
+    // 递归处理右子树
+    pre2Post(preOrder, preStart + leftSubtreeSize + 1, preEnd, postOrder, postStart + leftSubtreeSize, postEnd - 1);
+}
+
+/**
+ * 类似与前序与后序，采用的深度优先的思想，不过与先序相反。
+ * 一直沿着右子树，若右孩子为空，则回溯到上一个节点的左子树，重复操作。
+ * @param root 根节点
+ */
+void postOrderNoRe(TreeNode *root) {
+    TreeNode *stack[100], *res[100];
+    int s_top = -1, r_top = -1;
+    stack[++s_top] = root;
+    res[++r_top] = root;
+    for(;;) {
+        TreeNode *temp = res[r_top]->rchild;
+        // 如果当前节点的有孩子为空 则重复回溯到上一个节点的左孩子 直到左孩子不为空
+        while (s_top != -1 && temp == null) temp = stack[s_top--]->lchild;
+        if (temp == null) break;
+        res[++r_top] = temp;
+        stack[++s_top] = temp;
+    }
+    while (r_top != -1) printf("%d ", res[--r_top]->data);
+}
+
+void linkedLeafNode(TreeNode *root) {
+    TreeNode *stack[100];
+    int s_top = -1;
+    TreeNode *p = root;
+    TreeNode *pre_leaf = null;
+    while (p || s_top != -1) {
+        if (p) {
+            stack[++s_top] = p;
+            p = p->lchild;
+        } else {
+            //尤其注意这里出栈的代码是 's_top--' 而不是 '--s_top'. 这是基于初始化时s_top = -1的原因
+            p = stack[s_top--];
+            if (p->lchild == null && p->rchild == null) {
+                if (pre_leaf == null) pre_leaf = p;
+                else {
+                    pre_leaf->rchild = p;
+                    pre_leaf = p;
+                }
+            }
+            p = p->rchild;
+        }
+    }
+}
+
+/**
+ * 这段代码实现的是双向冒泡排序（Two-way Bubble Sort），也被称为鸡尾酒排序（Cocktail Sort）。
+ * 它是冒泡排序的一种变体，不仅从左到右比较和交换元素，还从右到左来回进行比较和交换，
+ * 以便将最大值和最小值同时移动到正确的位置。
+ */
+void twoWayBubbleSort(int *arr, int len) {
+    int p_min = len - 1, p_max = 0;
+    //循环长度为数组的一半，每次循环后都会有一个最大值与最小值被放到正确的位置
+    for (int i = 0; i < len/2; i++, p_max++, p_min--) {
+        //把最大值放在最后面
+        for (int j = p_max; j <= p_min - 1; ++j) {
+            if (arr[j] > arr[j+1]) {
+                int temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+            }
+        }
+        //把最小值放在最前面
+        for (int j = p_min; j >= p_max + 1; --j) {
+            if (arr[j-1] > arr[j]) {
+                int temp = arr[j-1];
+                arr[j-1] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+}
+
+//基于快速排序的思想 改进算法 O(n)
+void polishOddFrontOfEven(int *arr, int len) {
+    int p_odd = 0, p_even = len-1;
+    for (; p_odd < p_even; p_even--, p_odd++) {
+        while (arr[p_odd] % 2 == 1) p_odd++;
+        while (arr[p_even] % 2 == 0) p_even--;
+        if (p_even > p_odd) {
+            int temp = arr[p_odd];
+            arr[p_odd] = arr[p_even];
+            arr[p_even] = temp;
+        }
+    }
+}
+
+void oddFrontOfEven(int *arr, int len) {
+    for (int i = 0; i < len; ++i) {
+        if (arr[i] % 2 == 1) continue;
+        for (int j = i+1; j < len; ++j) {
+            if (arr[j] % 2 == 1) {
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+                break;
+            }
+        }
+    }
+}
+
+//基于快速排序的寻找k最小的元素
+int kthSmallest(int arr[], int low, int high, int k) {
+    if (k > 0 && k <= high - low + 1) {
+        int pos = partition(arr, low, high);
+        if (pos - low == k - 1) return arr[pos];
+        if (pos - low > k - 1) return kthSmallest(arr, low, pos - 1, k);
+        return kthSmallest(arr, pos + 1, high, k - pos + low - 1);
+    }
+    return -1;
+}
+
+int findMinorX(int *arr, int len, int x) {
+    if (x > len) return -1;
+    for (int i = 0; i < x; ++i) {
+        for (int j = 0; j < len - i - 1; ++j) {
+            if (arr[j] < arr[j+1]) {
+                exchange(&arr[j], &arr[j+1]);
+            }
+        }
+    }
+    return arr[len - x];
+}
+
+void dutchFlagProblem(char **flag, int len) {
+    int p_red = 0, p_blue = len - 1, p_current = p_red;
+    while (p_current < p_blue) {
+        if (strcmp(flag[p_current], "red") == 0) {
+            char *temp = flag[p_red];
+            flag[p_red] = flag[p_current];
+            flag[p_current] = temp;
+            p_red++;
+        }
+        if (strcmp(flag[p_current], "blue") == 0) {
+            char *temp = flag[p_blue];
+            flag[p_blue] = flag[p_current];
+            flag[p_current] = temp;
+            p_blue--;
+        }
+        p_current++;
+    }
+}
+
+int isSubsequence(LinkedListNode *org, LinkedListNode *dist) {
+    LinkedListNode *p_org = org->next, *p_dist = dist->next;
+    while (p_org != null) {
+        LinkedListNode *p_temp_dist = p_dist;
+        LinkedListNode *p_temp_org = p_org;
+        while (p_temp_dist != null && p_temp_org->data == p_temp_dist->data) {
+            p_temp_org = p_temp_org->next;
+            p_temp_dist = p_temp_dist->next;
+        }
+        if (p_temp_dist == null) return 1;
+        else p_org = p_org->next;
+    }
+    return 0;
+}
+
+void copyBinaryTree(TreeNode *root, TreeNode **copy) {
+    TreeNode *stack_root[100], *stack_copy[100];
+    int s_top = -1;
+    TreeNode *p = root;
+    TreeNode *p_copy = null;
+    int isLeft = 1;
+    while (p || s_top != -1) {
+        if (p) {
+            TreeNode *temp = malloc(sizeof(TreeNode));
+            temp->data = p->data;
+            temp->lchild = null;
+            temp->rchild = null;
+            if (*copy == null) *copy = temp;
+            else if (isLeft == 1) stack_copy[s_top]->lchild = temp;
+            else {
+                //由于父节点已经被弹出，所以需要+1获取父节点
+                stack_copy[s_top+1]->rchild = temp;
+                isLeft = 1;
+            }
+            stack_root[++s_top] = p;
+            stack_copy[s_top] = temp;
+            p = p->lchild;
+        } else {
+            isLeft = 0;
+            p = stack_root[s_top--];
+            p = p->rchild;
+        }
+    }
+}
+
+void divideOddEven(LinkedListNode *list, LinkedListNode **odd, LinkedListNode **even) {
+    *odd = malloc(sizeof(LinkedListNode));
+    *even = malloc(sizeof(LinkedListNode));
+    (*odd)->next = null, (*even)->next = null;
+    LinkedListNode *p_list = list;
+    while (p_list->next != null) {
+        LinkedListNode *temp = malloc(sizeof(LinkedListNode));
+        temp->data = p_list->next->data;
+        temp->next = null;
+        if (temp->data % 2 == 0) {
+            if ((*even)->next == null) (*even)->next = temp;
+            else {
+                LinkedListNode *temp_even = *even;
+                while (temp_even->next != null) {
+                    if (temp_even->next->data > temp->data) {
+                        temp->next = temp_even->next;
+                        temp_even->next = temp;
+                        break;
+                    }
+                    temp_even = temp_even->next;
+                }
+                if (temp_even->next == null) temp_even->next = temp;
+            }
+        } else if (temp->data % 2 == 1) {
+            if ((*odd)->next == null) (*odd)->next = temp;
+            else {
+                LinkedListNode *temp_odd = *odd;
+                while (temp_odd->next != null) {
+                    if (temp_odd->next->data > temp->data) {
+                        temp->next = temp_odd->next;
+                        temp_odd->next = temp;
+                        break;
+                    }
+                    temp_odd = temp_odd->next;
+                }
+                if (temp_odd->next == null) temp_odd->next = temp;
+            }
+        }
+        LinkedListNode *next = p_list->next;
+        free(p_list);
+        p_list = next;
     }
 }
