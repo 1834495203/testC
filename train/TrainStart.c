@@ -1417,7 +1417,7 @@ int findMinorX(int *arr, int len, int x) {
 
 void dutchFlagProblem(char **flag, int len) {
     int p_red = 0, p_blue = len - 1, p_current = p_red;
-    while (p_current < p_blue) {
+    while (p_current <= p_blue) {
         if (strcmp(flag[p_current], "red") == 0) {
             char *temp = flag[p_red];
             flag[p_red] = flag[p_current];
@@ -1521,4 +1521,144 @@ void divideOddEven(LinkedListNode *list, LinkedListNode **odd, LinkedListNode **
         free(p_list);
         p_list = next;
     }
+}
+
+int getHeightTree(TreeNode *root) {
+    if (root == null) return 0;
+    else {
+        int l = getHeightTree(root->lchild);
+        int r = getHeightTree(root->rchild);
+        return 1 + (int) fmax(l, r);
+    }
+}
+
+void insertLinkedList(LinkedListNode **head) {
+    if (head == null || *head == null) return;
+
+    LinkedListNode *sortedList = null;  // 已排序部分的链表
+    LinkedListNode *current = *head;   // 当前待排序节点
+
+    while (current != null) {
+        LinkedListNode *next = current->next; // 保存下一个节点以备后续处理
+        if (sortedList == null || current->data <= sortedList->data) {
+            // 如果当前节点的值小于已排序链表的第一个节点，直接插入到链表头部
+            current->next = null;
+            sortedList = current;
+        } else {
+            // 否则，遍历已排序链表找到正确的插入位置
+            LinkedListNode *temp = sortedList;
+            while (temp->next != null && temp->next->data < current->data) {
+                temp = temp->next;
+            }
+            // 插入当前节点到已排序链表的合适位置
+            current->next = temp->next;
+            temp->next = current;
+        }
+        current = next; // 处理下一个节点
+    }
+
+    *head = sortedList; // 更新原始链表头指针
+}
+
+void insertSortBinary(int *arr, int len) {
+    int i, j;
+    for(i = 1; i < len; i++) {
+        int temp = arr[i];
+        // 在有序表中用二分查找找到插入位置
+        int low = 0, high = i - 1;
+        while (low <= high) {
+            int mid = (low+high) / 2;
+            if (arr[mid] > temp) high = mid - 1;
+            else low = mid + 1;
+        }
+        //一次性移动
+        for(j = i-1; j >= high + 1; j--)
+            arr[j+1] = arr[j];
+        arr[high+1] = temp;
+    }
+}
+
+int getNodesNum(TreeNode *root) {
+    if (root == null) return 0;
+    else {
+        int l = getNodesNum(root->lchild);
+        int r = getNodesNum(root->rchild);
+        return l + r + 1;
+    }
+}
+
+ALGraph *convert_Matrix2Adjacent(MGraph matrix) {
+    ALGraph *alg = malloc(sizeof(ALGraph));
+    alg->arcNum = matrix.arcNum;
+    alg->vexNum = matrix.vexNum;
+    //首先转换顶点表
+    for (int i = 0; i < matrix.vexNum; ++i) {
+        alg->vertices[i].data = matrix.Vex[i];
+        alg->vertices[i].first = null;
+    }
+    // 遍历邻接矩阵，将非零元素添加到邻接表
+    for (int i = 0; i < matrix.vexNum; ++i) {
+        for (int j = 0; j < matrix.vexNum; ++j) {
+            if (matrix.Edge[i][j] != 0) {
+                ArcNode *arcNode = (ArcNode *)malloc(sizeof(ArcNode));
+                arcNode->adjVex = j;
+                arcNode->next = alg->vertices[i].first;
+                alg->vertices[i].first = arcNode;
+            }
+        }
+    }
+    return alg;
+}
+
+int sumTreeNodeData(TreeNode *root) {
+    if (root == null) return 0;
+    else {
+        int l = sumTreeNodeData(root->lchild);
+        int r = sumTreeNodeData(root->rchild);
+        return l + r + root->data;
+    }
+}
+
+void oddFrontOfEven_(int *arr, int len) {
+    int p_even = len - 1, p_odd = 0;
+    while (p_even > p_odd) {
+        while (p_even > p_odd && arr[p_odd] % 2 == 1) p_odd++;
+        while (p_even > p_odd && arr[p_even] % 2 == 0) p_even--;
+        int temp = arr[p_odd];
+        arr[p_odd] = arr[p_even];
+        arr[p_even] = temp;
+    }
+}
+
+void convert_10_8() {
+    int stack[100];
+    int s_top = -1;
+    int x;
+    scanf_s("%d", &x);
+    while (x) {
+        stack[++s_top] = x % 8;
+        x /= 8;
+    }
+    while (s_top != -1) printf("%d", stack[s_top--]);
+}
+
+void hanoi(int n, char source, char auxiliary, char target) {
+    if (n == 1) {
+        printf("Move disk 1 from %c to %c\n", source, target);
+        return;
+    }
+    hanoi(n - 1, source, target, auxiliary);
+    printf("Move disk %d from %c to %c\n", n, source, target);
+    hanoi(n - 1, auxiliary, source, target);
+}
+
+int **transposition(int **arr, int n, int m) {
+    int **trans = malloc(sizeof(int *) * n);
+    for (int i = 0; i < m; ++i) trans[i] = malloc(sizeof(int) * m);
+    for (int i = 0; i < m; ++i) {
+        for (int j = 0; j < n; ++j) {
+            trans[i][j] = arr[j][i];
+        }
+    }
+    return trans;
 }

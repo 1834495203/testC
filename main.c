@@ -82,7 +82,7 @@ int test(){
     return i;
 }
 
-//1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+//1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
 void sort() {
     int size;
     scanf_s("%d", &size);
@@ -431,10 +431,37 @@ void ssss(int **x){
     **x = 5;
 }
 
+int isBST_(TreeNode *root){
+    if (root == null) return 1;
+    else {
+        int l = isBST(root->lchild);
+        int r = isBST(root->rchild);
+        int current = 0;
+        if (root->lchild && root->rchild) {
+            current = root->lchild->data < root->data && root->rchild->data > root->data;
+        }
+        return l == 1 && r == 1 && current == 1;
+    }
+}
+
 int main() {
 
+//    char x[] = {'Q', 'H', 'C', 'Y', 'P', 'A', 'M', 'S', 'R', 'D', 'F', 'X'};
+//    int y[] = {7, 2, 16, 15, 0, 12, 18, 17, 3, 5, 23, 24};
+//    for (int i = 0; i < 12; ++i) {
+//        printf("%d ", x[i] - 'A');
+//        printf("%c ", y[i] + 'A');
+//    }
+
+//    convert_10_8();
+//    hanoi(2, 'A', 'B', 'C');
+
 //    int arr1[] = {5, 3, 7, 2, 6, 8, 9, 4, 1};
+//    oddFrontOfEven_(arr1, 9);
+//    printArray(arr1, 9);
 //    LinkedListNode *temp = createList(arr1, 9);
+//    insertLinkedList(&temp);
+//    printLinkedList(temp);
 //    LinkedListNode *odd, *even;
 //    divideOddEven(temp, &odd, &even);
 //    getch();
@@ -446,6 +473,12 @@ int main() {
 //    insertTreeNode(root, 35);
 //    insertTreeNode(root, 75);
 //    insertTreeNode(root, 125);
+//    insertTreeNode(root, 200);
+//    insertTreeNode(root, 225);
+//    insertTreeNode(root, 325);
+//    int x = isBST_(root);
+//    int x = isBalanceBinaryTree(root);
+//    printf("%d", x);
 //    TreeNode *copy = null;
 //    copyBinaryTree(root, &copy);
 //    getch();
@@ -457,7 +490,7 @@ int main() {
 //    int i = isSubsequence(l1, l2);
 //    printf("%d", i);
 
-//    char *flag[] = {"blue", "white", "red", "red", "white", "blue", "red", "blue"};
+//    char *flag[] = {"red", "white", "red", "red", "white", "blue", "red", "blue"};
 //    dutchFlagProblem(flag, 8);
 //    for (int i = 0; i < 8; ++i) {
 //        printf("%s ", flag[i]);

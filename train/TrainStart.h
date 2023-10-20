@@ -9,6 +9,7 @@
 #include "../list/base/listData.h"
 #include "../tree/base/treeData.h"
 #include "../stack/stackData.h"
+#include "../graph/GraphData.h"
 
 /**
  * 打印数组
@@ -716,4 +717,75 @@ void copyBinaryTree(TreeNode *root, TreeNode **copy);
  * @param even 偶数链表
  */
 void divideOddEven(LinkedListNode *list, LinkedListNode **odd, LinkedListNode **even);
+
+/**
+ * 递归获取树的高度
+ * @param root 根节点
+ * @return 高度
+ */
+int getHeightTree(TreeNode *root);
+
+/**
+ * 链式直插
+ * @param list 链表
+ */
+void insertLinkedList(LinkedListNode **head);
+
+/**
+ * 折半插入排序
+ * @param arr 数组
+ * @param len 长度
+ */
+void insertSortBinary(int arr[], int len);
+
+/**
+ * 获取二叉树节点的数量
+ * @param root 根节点
+ * @return 二叉树节点的数量
+ */
+int getNodesNum(TreeNode *root);
+
+/**
+ * 邻接矩阵转为邻接表
+ * @param matrix 临界矩阵
+ * @return 邻接表
+ */
+ALGraph *convert_Matrix2Adjacent(MGraph matrix);
+
+/**
+ * 计算二叉树所有节点的值的和
+ * @param root 根节点
+ * @return 总值
+ */
+int sumTreeNodeData(TreeNode *root);
+
+/**
+ * 采用两个指针将奇数移在偶数前面
+ * @param arr 数组
+ * @param len 长度
+ */
+void oddFrontOfEven_(int arr[], int len);
+
+/**
+ * 10进制转为8进制
+ */
+void convert_10_8();
+
+/**
+ * hanoi塔问题
+ * @param n n个圆盘
+ * @param source 原塔座
+ * @param auxiliary 辅助塔座
+ * @param target 目标塔座
+ */
+void hanoi(int n, char source, char auxiliary, char target);
+
+/**
+ * 矩阵转置
+ * @param arr 二阶矩阵 n*m
+ * @param n 行数量
+ * @param m 列数量
+ * @return 转置矩阵
+ */
+int **transposition(int **arr, int n, int m);
 #endif //TESTC_TRAINSTART_H
