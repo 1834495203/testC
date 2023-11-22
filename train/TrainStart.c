@@ -1303,7 +1303,7 @@ void postOrderNoRe(TreeNode *root) {
     res[++r_top] = root;
     for(;;) {
         TreeNode *temp = res[r_top]->rchild;
-        // 如果当前节点的有孩子为空 则重复回溯到上一个节点的左孩子 直到左孩子不为空
+        // 如果当前节点的右孩子为空 则重复回溯到上一个节点的左孩子 直到左孩子不为空
         while (s_top != -1 && temp == null) temp = stack[s_top--]->lchild;
         if (temp == null) break;
         res[++r_top] = temp;
@@ -1661,4 +1661,108 @@ int **transposition(int **arr, int n, int m) {
         }
     }
     return trans;
+}
+
+void convert2ParentTree(ParentTreeNode *root, ParentTreeNode *parent) {
+    if (root == null) return;
+    else {
+        convert2ParentTree(root->lchild, root);
+        root->parent = parent;
+        convert2ParentTree(root->rchild, root);
+    }
+}
+
+void createByPreorder(TreeNode **root, Node *data, int *k, int len) {
+    if (*k >= len || data[*k] == -1) {
+        (*k)++;
+        *root = null;
+        return;
+    }
+    *root = malloc(sizeof(TreeNode));
+    (*root)->data = data[(*k)++];
+    createByPreorder(&((*root)->lchild), data, k, len);
+    createByPreorder(&((*root)->rchild), data, k, len);
+}
+
+void preorder(TreeNode *root) {
+    if (root == null) return;
+    else{
+        printf("%d ", root->data);
+        preorder(root->lchild);
+        preorder(root->rchild);
+    }
+}
+
+void secondOptimal(TreeNode **root, int *data, int *sw, int low, int high) {
+    int i = low, j;
+    int min = abs(sw[high] - sw[low]), dw = sw[high] + sw[low-1];
+    for (j = low+1; j <= high; ++j) {
+        if (abs(dw - sw[j] - sw[j-1]) < min){
+            i = j;
+            min = abs(dw - sw[j] - sw[j-1]);
+        }
+    }
+    *root = malloc(sizeof(TreeNode));
+    (*root)->data = data[i];
+    if (i == low) (*root)->lchild = null;
+    else secondOptimal(&((*root)->lchild), data, sw, low, j-1);
+    if (i == high) (*root)->rchild = null;
+    else secondOptimal(&((*root)->rchild), data, sw, i+1, high);
+}
+
+int deleteBSTHelper(TreeNode **root, int data) {
+    if (*root == null) {
+        return 0; // Node not found
+    } else {
+        if ((*root)->data == data) {
+            TreeNode *q, *temp, *s;
+            if ((*root)->rchild == null) {
+                q = *root;
+                *root = (*root)->lchild;
+                free(q);
+            } else if ((*root)->lchild == null) {
+                q = *root;
+                *root = (*root)->rchild;
+                free(q);
+            } else {
+                q = *root;
+                temp = (*root)->rchild;
+                while (temp->lchild != null) temp = temp->lchild;
+                s = temp->lchild;
+                if (s->rchild != null) temp->lchild = s->rchild;
+                (*root)->data = s->data;
+                free(s);
+            }
+            return 1; // Node found and deleted
+        } else if ((*root)->data > data) {
+            return deleteBSTHelper(&(*root)->lchild, data);
+        } else {
+            return deleteBSTHelper(&(*root)->rchild, data);
+        }
+    }
+}
+
+void deleteBST(TreeNode **root, int data) {
+    if (*root == null) return;
+    else {
+        if ((*root)->data == data) deleteBSTHelper(root, data);
+        else if ((*root)->data > data) deleteBST(&(*root)->lchild, data);
+        else deleteBST(&(*root)->rchild, data);
+    }
+}
+
+void divideArray() {
+    int arr[3][3], temp[9], p_odd = -1, p_even = 9, bool = 1;
+    for (int i = 0; i < 3; ++i)
+        for (int j = 0; j < 3; ++j) {
+            scanf_s("%d", &arr[i][j]);
+            if (!(arr[i][j] % 2)) temp[--p_even] = arr[i][j];
+            else temp[++p_odd] = arr[i][j];
+        }
+    while (p_odd != -1 || p_even != 9) {
+        if (bool) for (int i = 0; p_odd >= 0 && i < 3; i++) printf("%d ", temp[p_odd--]);
+        else for (int i = 0; p_even <= 8 && i < 3; i++) printf("%d ", temp[p_even++]);
+        printf("\n");
+        bool = !bool;
+    }
 }

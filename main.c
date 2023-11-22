@@ -444,7 +444,33 @@ int isBST_(TreeNode *root){
     }
 }
 
+void insert_(int arr[], int len){
+    int i, j;
+    for(i = 1; i < len; i++) {
+        int temp = arr[i];
+        for(j = i-1; j >= 0; j--) {
+            if (temp >= arr[j]) break;
+            else arr[j+1] = arr[j];
+        }
+        arr[j+1] = temp;
+    }
+}
+
 int main() {
+
+    divideArray();
+
+//    int arr[] = {1, 2, -1, 4, 7, -1, 3, 5, -1, 8, 6, 9, -1};
+//    insert_(arr, 13);
+//    printArray(arr, 13);
+
+//    TreeNode *root;
+//    Node data[] = {1, 2, -1, 4, 7, -1, 3, 5, -1, 8, 6, 9, -1};
+//    int k = 0;
+//    createByPreorder(&root, data, &k, 13);
+//    preorder(root);
+//    sort();
+//    system("pause");
 
 //    char x[] = {'Q', 'H', 'C', 'Y', 'P', 'A', 'M', 'S', 'R', 'D', 'F', 'X'};
 //    int y[] = {7, 2, 16, 15, 0, 12, 18, 17, 3, 5, 23, 24};

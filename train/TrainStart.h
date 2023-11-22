@@ -788,4 +788,50 @@ void hanoi(int n, char source, char auxiliary, char target);
  * @return 转置矩阵
  */
 int **transposition(int **arr, int n, int m);
+
+/**
+ * 将未填充的parent节点正确填充
+ * @param root 根节点
+ * @param parent 双亲节点
+ */
+void convert2ParentTree(ParentTreeNode *root, ParentTreeNode *parent);
+
+/**
+ * 前序遍历构建二叉树
+ * @param root 根节点
+ * @param data 前序遍历
+ * @param k 下标
+ * @param len 长度
+ */
+void createByPreorder(TreeNode **root, Node *data, int *k, int len);
+
+/**
+ * 前序遍历
+ * @param root 根节点
+ */
+void preorder(TreeNode *root);
+
+/**
+ * 构造次优查找树
+ * @param root 根节点
+ * @param data 数据
+ * @param sw 权值
+ * @param low 低位
+ * @param high 高位
+ */
+void secondOptimal(TreeNode **root, int data[], int sw[], int low, int high);
+
+/**
+ * 删除二叉查找树中某个值
+ * @param root 根节点
+ * @param data 某个值
+ */
+void deleteBST(TreeNode **root, int data);
+
+/**
+ * 有一个3*3的二维int数组，
+ * 数组中的数由键盘输入，请将数组中的所有奇数输出到奇数行，
+ * 将偶数输出到偶数行，每行三个数。
+ */
+void divideArray();
 #endif //TESTC_TRAINSTART_H

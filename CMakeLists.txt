@@ -10,4 +10,6 @@ add_executable(testC main.c tree/base/treeQuiz.c tree/base/treeQuiz.h queue/base
         graph/GraphData.h
         stack/stackData.c
         stack/stackData.h
+        generateList/GenerateList.c
+        generateList/GenerateList.h
 )

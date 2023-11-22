@@ -22,4 +22,10 @@ typedef struct ThreadNode {
     int ltag, rtag;                     // 0为孩子节点，1为前驱或后继
 }ThreadNode, *ThreadTree;
 
+//带父节点的三叉树
+typedef struct ParentTreeNode {
+    Node data;
+    struct ParentTreeNode *lchild, *rchild, *parent;
+}ParentTreeNode;
+
 #endif //TESTC_TREEDATA_H
